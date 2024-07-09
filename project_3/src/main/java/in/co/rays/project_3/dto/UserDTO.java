@@ -194,24 +194,23 @@ public class UserDTO extends BaseDTO {
 		return INACTIVE;
 	}
 
-	
-	  public String getKey() {
-	  
-	  return id + ""; 
-	  }
-	  
-	  public String getValue() {
-	  
-	  return firstName + "" + lastName; 
-	  }
-	  
-	 
-	/*
-	 * @Override public String getKey() { // TODO Auto-generated method stub return
-	 * firstName; }
-	 * 
-	 * @Override public String getValue() { // TODO Auto-generated method stub
-	 * return firstName; }
-	 */
+//	public String getKey() {
+//
+//		return id + "";
+//	}
+//
+//	public String getValue() {
+//
+//		return firstName + "" + lastName;
+//	}
+	public String getKey() {
+
+		return id +" ";
+	}
+
+	public String getValue() {
+
+		return firstName+" ";
+	}
 
 }

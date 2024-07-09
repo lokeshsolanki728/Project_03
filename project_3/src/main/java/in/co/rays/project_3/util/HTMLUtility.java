@@ -70,7 +70,7 @@ public class HTMLUtility {
         for (String key : keys) {
             val = map.get(key);
             if (key.trim().equals(selectedVal)) {
-                sb.append("<option selected value='" + key + "'>" + val
+                sb.append("<option selected value='" + val + "'>" + val
                         + "</option>");
             } else {
                 sb.append("<option value='" + key + "'>" + val + "</option>");
@@ -131,7 +131,7 @@ public class HTMLUtility {
         if (select)
         {
 
-            sb.append("<option class='dropdown-item' style='border: 2px solid #8080803b;' selected value=''>------Select a "+ name +"---------</option>");
+        	  sb.append("<option class='dropdown-item' selected value=''>------Select a"+ name +"--------</option>");
         }
 
         

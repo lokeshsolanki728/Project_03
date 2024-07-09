@@ -1,5 +1,7 @@
+
 <%@page import="java.util.List"%>
 <%@page import="in.co.rays.project_3.controller.ClientCtl"%>
+
 <%@page import="java.util.HashMap"%>
 <%@page import="in.co.rays.project_3.util.HTMLUtility"%>
 <%@page import="in.co.rays.project_3.util.DataUtility"%>
@@ -11,41 +13,33 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Issue view</title>
+<title>Client view</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script>
-	function validateMobileNo(event) {
-		const input = event.target;
-		input.value = input.value.replace(/[^0-9.]/g, '');
-		if (input.value.length > 0 && input.value[0] <= '5') {
-
-			input.value = '';
+<script type="text/javascript">
+	function numberLength(input) {
+		if (input.value.length > 10) {
+			input.value = input.value.slice(0, 10);
 		}
 	}
-	function validateVersion(event) {
-		const input = event.target;
-		input.value = input.value.replace(/[^0-9.]/g, '');
-	}
 </script>
-<script src="<%=ORSView.APP_CONTEXT%>/js/ValidateToInput.js"></script>
 <style type="text/css">
 i.css {
-	border: 2px solid #8080803b;
+	bClient: 2px solid #8080803b;
 	padding-left: 10px;
 	padding-bottom: 11px;
 	background-color: #ebebe0;
 }
 
 .input-group-addon {
-	/* box-shadow: 9px 8px 7px #001a33; */
-	background-image: linear-gradient(to bottom right, orange, black);
+	box-shadow: 9px 8px 7px #001a33;
+	background-image: linear-gradient(to bottom right, white,pink);
 	background-repeat: no repeat;
 	background-size: 100%;
 	padding-bottom: 11px;
 }
 
 .hm {
-	background-image: url('<%=ORSView.APP_CONTEXT%>/img/unsplash.jpg');
+	background-image: url('<%=ORSView.APP_CONTEXT%>/img/download (3).jpeg');
 	background-size: cover;
 	padding-top: 6%;
 }
@@ -80,16 +74,15 @@ i.css {
 							<%
 								} else {
 							%>
-							<h3 class="text-center default-text text-primary">Add Client</h3>
+							<h3 class="text-center default-text text-primary">Add
+								Client</h3>
 							<%
 								}
 							%>
 							<!--Body-->
 							<div>
 								<%
-									List list = (List) request.getAttribute("roleList");
-									List list1 = (List) request.getAttribute("list1");
-									HashMap map = (HashMap) request.getAttribute("map");
+								HashMap map= (HashMap) request.getAttribute("priorityp");
 								%>
 
 								<H4 align="center">
@@ -125,23 +118,6 @@ i.css {
 
 							<div class="md-form">
 
-								<span class="pl-sm-5"><b> Date</b> <span
-									style="color: red;">*</span></span></br>
-								<div class="col-sm-12">
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<div class="input-group-text">
-												<i class="fa fa-calendar grey-text" style="font-size: 1rem;"></i>
-											</div>
-										</div>
-										<input type="text" name="date" id="datepicker2"
-											readonly="readonly" class="form-control"
-											placeholder="Enter Date"
-											value="<%=DataUtility.getDateString(dto.getDate())%>">
-									</div>
-								</div>
-								<font color="red" class="pl-sm-5"> <%=ServletUtility.getErrorMessage("date", request)%></font></br>
-
 								<span class="pl-sm-5"><b> Name</b> <span
 									style="color: red;">*</span></span> </br>
 								<div class="col-sm-12">
@@ -152,84 +128,67 @@ i.css {
 											</div>
 										</div>
 										<input type="text" class="form-control" name="name"
-											onkeypress="return validateInput(event)"
 											placeholder="Enter Name"
+											onkeydown="return /[a-zA-Z]/i.test(event.key)" maxlength="30"
 											value="<%=DataUtility.getStringData(dto.getName())%>">
 									</div>
 								</div>
 								<font color="red" class="pl-sm-5"> <%=ServletUtility.getErrorMessage("name", request)%></font></br>
 
-
-								<span class="pl-sm-5"><b> Address</b> <span
+								<span class="pl-sm-5"><b>Phone</b> <span
 									style="color: red;">*</span></span></br>
 								<div class="col-sm-12">
 									<div class="input-group">
 										<div class="input-group-prepend">
 											<div class="input-group-text">
-												<i class="fa fa-list grey-text" style="font-size: 1rem;"></i>
-											</div>
-										</div>
-										<textarea class="form-control" name="address"
-											placeholder="Enter Address" rows="3" cols="3">
-											<%=DataUtility.getStringData(dto.getAddress())%></textarea>
-									</div>
-								</div>
-								<font color="red" class="pl-sm-5"> <%=ServletUtility.getErrorMessage("address", request)%></font></br>
-
-
-								<span class="pl-sm-5"><b> Phone Number</b> <span
-									style="color: red;">*</span></span></br>
-								<div class="col-sm-12">
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<div class="input-group-text">
-												<i class="fa fa-list grey-text" style="font-size: 1rem;"></i>
-											</div>
-										</div>
-										<input type="text" class="form-control" name="phone" rows="3"
-											oninput="validateMobileNo(event)" cols="3"
-											placeholder="Enter Phone Number" maxlength="10"
-											value="<%=DataUtility.getStringData(dto.getPhone())%>">
-									</div>
-								</div>
-								<font color="red" class="pl-sm-5"> <%=ServletUtility.getErrorMessage("phone", request)%></font></br>
-
-								<span class="pl-sm-5"><b> Version</b> <span
-									style="color: red;">*</span></span></br>
-								<div class="col-sm-12">
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<div class="input-group-text">
-												<i class="fa fa-list grey-text" style="font-size: 1rem;"></i>
-											</div>
-										</div>
-										<input type="text" class="form-control" name="version"
-											rows="3" oninput="validateVersion(event)" cols="3"
-											placeholder="Enter version"
-											value="<%=DataUtility.getDouble(dto.getVersion())%>">
-									</div>
-								</div>
-								<font color="red" class="pl-sm-5"> <%=ServletUtility.getErrorMessage("version", request)%></font></br>
-
-								<span class="pl-sm-5"><b>Priority</b><span
-									style="color: red;">*</span></span> </br>
-
-								<div class="col-sm-12">
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<div class="input-group-text">
-												<i class="fa fa-venus-mars grey-text"
+												<i class="fa fa-user-circle grey-text"
 													style="font-size: 1rem;"></i>
 											</div>
 										</div>
-
-										<%
-											String htmlList = HTMLUtility.getList("priority", dto.getPriority(), map);
-										%>
-										<%=htmlList%></div>
+										<input type="number" class="form-control" name="phone"
+											placeholder="Enter 10 digit phone No"
+											oninput="numberLength(this)" 
+											
+											value="<%=DataUtility.getStringData(dto.getPhone()).equals("0")? "" : DataUtility.getStringData(dto.getPhone())%>">
+									</div>
+								</div>
+								<font color="red" class="pl-sm-5"> <%=ServletUtility.getErrorMessage("phone", request)%></font></br>
+								
+ 
+ 
+ 	
+								<span class="pl-sm-5"><b>Priority</b><span
+									style="color: red;">*</span></span></br>
+								<div class="col-sm-12">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<div class="input-group-text">
+												<i class="fa fa-user grey-text" style="font-size: 1rem;"></i>
+											</div>
+										</div>
+										<%=HTMLUtility.getList("priority", String.valueOf(dto.getPriority()), map)%>
+									</div>
 								</div>
 								<font color="red" class="pl-sm-5"> <%=ServletUtility.getErrorMessage("priority", request)%></font></br>
+ 	
+ 
 
+								<span class="pl-sm-5"><b> Address</b> <span
+									style="color: red;">*</span></span> </br>
+								<div class="col-sm-12">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<div class="input-group-text">
+												<i class="fa fa-user-alt grey-text" style="font-size: 1rem;"></i>
+											</div>
+										</div>
+										<textarea type="text" class="form-control" name="address"
+										
+											placeholder="Address"
+											value="<%=DataUtility.getStringData(dto.getAddress())%>"></textarea>
+									</div>
+								</div>
+								<font color="red" class="pl-sm-5"> <%=ServletUtility.getErrorMessage("address", request)%></font></br>
 
 								<%
 									if (dto.getId() != null && id > 0) {
@@ -239,8 +198,8 @@ i.css {
 
 									<input type="submit" name="operation"
 										class="btn btn-success btn-md" style="font-size: 17px"
-										value="<%=ClientCtl.OP_UPDATE%>"> <input type="submit"
-										name="operation" class="btn btn-warning btn-md"
+										value="<%=ClientCtl.OP_UPDATE%>"> <input
+										type="submit" name="operation" class="btn btn-warning btn-md"
 										style="font-size: 17px" value="<%=ClientCtl.OP_CANCEL%>">
 
 								</div>

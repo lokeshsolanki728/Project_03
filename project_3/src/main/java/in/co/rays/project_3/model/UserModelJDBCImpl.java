@@ -524,6 +524,12 @@ public class UserModelJDBCImpl implements UserModelInt {
 		return null;
 	}
 
+	@Override
+	public void UpdateRegisterUser(UserDTO dto) throws ApplicationException, DuplicateRecordException {
+		// TODO Auto-generated method stub
+		
+	}
+
 	/*
 	 * public boolean forgetPassword(String login) throws ApplicationException,
 	 * RecordNotFoundException { // TODO Auto-generated method stub UserDTO

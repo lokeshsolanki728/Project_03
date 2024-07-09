@@ -1,3 +1,4 @@
+
 package in.co.rays.project_3.controller;
 
 import java.io.IOException;
@@ -15,40 +16,33 @@ import in.co.rays.project_3.dto.InventoryDTO;
 import in.co.rays.project_3.exception.ApplicationException;
 import in.co.rays.project_3.model.InventoryModelInt;
 import in.co.rays.project_3.model.ModelFactory;
-import in.co.rays.project_3.model.RoleModelInt;
 import in.co.rays.project_3.util.DataUtility;
 import in.co.rays.project_3.util.PropertyReader;
 import in.co.rays.project_3.util.ServletUtility;
 
-@WebServlet(name = " InventoryListCtl", urlPatterns = { "/ctl/InventoryListCtl" })
+@WebServlet(name = "InventoryListCtl", urlPatterns = "/ctl/InventoryListCtl")
 public class InventoryListCtl extends BaseCtl {
 
 	protected void preload(HttpServletRequest request) {
-		RoleModelInt model = ModelFactory.getInstance().getRoleModel();
-		InventoryModelInt cmodel = ModelFactory.getInstance().getInventoryModel();
-		HashMap<String, String> map = new HashMap<String, String>();
-		map.put("Hp", "Hp");
-		map.put("Dell", "Dell");
-		map.put("Lenovo", "Lenovo");
-		request.setAttribute("map", map);
-		try {
-			List list = cmodel.list(0, 0);
-			request.setAttribute("nameList", list);
-		} catch (Exception e) {
+		HashMap map = new HashMap();
+		map.put("bag", "bag");
+		map.put("laptop", "laptop");
+		map.put("mobile", "mobile");
+		map.put("charger", "charger");
 
-		}
+		request.setAttribute("productp", map);
+
 	}
 
 	@Override
 	protected BaseDTO populateDTO(HttpServletRequest request) {
 		InventoryDTO dto = new InventoryDTO();
 
-		//dto.setId(DataUtility.getLong(request.getParameter("id")));
-		dto.setSupplierName(DataUtility.getString(request.getParameter("name")));
-		dto.setLastUpdateDate(DataUtility.getDate(request.getParameter("date")));
-		dto.setQuantity(DataUtility.getInt(request.getParameter("quantity")));
+		dto.setSupplierName(DataUtility.getString(request.getParameter("supplierName")));
 		dto.setProduct(DataUtility.getString(request.getParameter("product")));
-		
+		dto.setLastUpdateDate(DataUtility.getDate(request.getParameter("lastUpdateDate")));
+		dto.setQuantity(DataUtility.getInt(request.getParameter("quantity")));
+
 		populateBean(dto, request);
 		return dto;
 	}
@@ -59,13 +53,13 @@ public class InventoryListCtl extends BaseCtl {
 		List next;
 		int pageNo = 1;
 		int pageSize = DataUtility.getInt(PropertyReader.getValue("page.size"));
-		InventoryDTO dto = new InventoryDTO();
+		InventoryDTO dto = (InventoryDTO) populateDTO(request);
 
 		InventoryModelInt model = ModelFactory.getInstance().getInventoryModel();
 		try {
 			list = model.search(dto, pageNo, pageSize);
 
-			ArrayList<InventoryDTO> a = (ArrayList<InventoryDTO>) list;
+			ArrayList a = (ArrayList<InventoryDTO>) list;
 
 			next = model.search(dto, pageNo + 1, pageSize);
 			ServletUtility.setList(list, request);
@@ -86,7 +80,7 @@ public class InventoryListCtl extends BaseCtl {
 			ServletUtility.handleException(e, request, response);
 			return;
 		} catch (Exception e) {
-// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 	}
@@ -94,9 +88,6 @@ public class InventoryListCtl extends BaseCtl {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		String op = DataUtility.getString(request.getParameter("operation"));
-
 		List list = null;
 		List next = null;
 		int pageNo = DataUtility.getInt(request.getParameter("pageNo"));
@@ -105,6 +96,7 @@ public class InventoryListCtl extends BaseCtl {
 		pageNo = (pageNo == 0) ? 1 : pageNo;
 		pageSize = (pageSize == 0) ? DataUtility.getInt(PropertyReader.getValue("page.size")) : pageSize;
 		InventoryDTO dto = (InventoryDTO) populateDTO(request);
+		String op = DataUtility.getString(request.getParameter("operation"));
 
 		String[] ids = request.getParameterValues("ids");
 		InventoryModelInt model = ModelFactory.getInstance().getInventoryModel();
@@ -113,8 +105,11 @@ public class InventoryListCtl extends BaseCtl {
 			if (OP_SEARCH.equalsIgnoreCase(op) || "Next".equalsIgnoreCase(op) || "Previous".equalsIgnoreCase(op)) {
 
 				if (OP_SEARCH.equalsIgnoreCase(op)) {
-					pageNo = 1;
+					if(request.getParameter("supplierName").equals("") && request.getParameter("product").equals("") && request.getParameter("lastUpdateDate").equals("") && request.getParameter("quantity").equals("")) {
+						ServletUtility.setErrorMessage(" Fill at least one search field", request);
+					}
 
+					pageNo = 1;
 				} else if (OP_NEXT.equalsIgnoreCase(op)) {
 					pageNo++;
 				} else if (OP_PREVIOUS.equalsIgnoreCase(op) && pageNo > 1) {
@@ -173,6 +168,7 @@ public class InventoryListCtl extends BaseCtl {
 			ServletUtility.handleException(e, request, response);
 			return;
 		} catch (Exception e) {
+
 			e.printStackTrace();
 		}
 	}
@@ -181,5 +177,4 @@ public class InventoryListCtl extends BaseCtl {
 	protected String getView() {
 		return ORSView.INVENTORY_LIST_VIEW;
 	}
-
 }

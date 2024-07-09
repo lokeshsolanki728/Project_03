@@ -47,14 +47,24 @@ i.css {
 
 .input-group-addon {
 	/* box-shadow: 9px 8px 7px #001a33; */
+	
 }
+.rahul{
+/* background-image: linear-gradient(to bottom right, Teal, MistyRose, Black ); */
+background-image: linear-gradient(to bottom right, green, yellow, whites);
+background-repeat: no repeat;
+background-size: 100%;
+padding-bottom: 11px;
+} 
 
-.p4 {
+
+
+ .p4 {
 	background-image: url('<%=ORSView.APP_CONTEXT%>/img/unsplash.jpg');
 	background-size: cover;
 	background-repeat: no repeat;
 	padding-top: 6%;
-}
+}  
 </style>
 </head>
 <body class="p4">
@@ -71,7 +81,7 @@ i.css {
 				<!-- Grid column -->
 				<div class="col-md-4 mb-4"></div>
 				<div class="col-md-4 mb-4">
-					<div class="card input-group-addon">
+					<div class="card input-group-addon  rahul">
 						<div class="card-body">
 
 							<h3 class="text-center default-text text-primary pb-2">User
@@ -176,6 +186,7 @@ i.css {
 											<i class="fa fa-key grey-text" style="font-size: 1rem;"></i>
 										</div>
 									</div>
+									
 									<input type="password" class="form-control"
 										name="confirmPassword" placeholder="confirmPassword"
 										value="<%=DataUtility.getStringData(dto.getConfirmPassword())%>">

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Logger;
 
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
@@ -109,25 +108,35 @@ public class UserModelHibImp implements UserModelInt {
 	 * @throws RecordNotFoundException  the record not found exception
 	 */
 	public void update(UserDTO dto) throws ApplicationException, DuplicateRecordException {
+		System.out.println("in addddddddddddd");
+		/* log.debug("usermodel hib start"); */
+
 		// TODO Auto-generated method stub
 		Session session = null;
 		Transaction tx = null;
-		UserDTO exesistDto = findByLogin(dto.getLogin());
+		UserDTO dtoExist = findByLogin(dto.getLogin());
 
-		if (exesistDto != null && exesistDto.getId() != dto.getId()) {
-			throw new DuplicateRecordException("Login id already exist");
+		// Check if updated College already exist
+
+		if (dtoExist != null && dtoExist.getId() != dto.getId()) {
+			throw new DuplicateRecordException("College is already exist" + "");
 		}
 
 		try {
 			session = HibDataSource.getSession();
 			tx = session.beginTransaction();
+			System.out.println("before update");
+
 			session.saveOrUpdate(dto);
+			System.out.println("after update");
 			tx.commit();
+
 		} catch (HibernateException e) {
+			e.printStackTrace();
 			if (tx != null) {
 				tx.rollback();
 			}
-			throw new ApplicationException("Exception in User update" + e.getMessage());
+			throw new ApplicationException("Exception in user update" + e.getMessage());
 		} finally {
 			session.close();
 		}
@@ -145,6 +154,7 @@ public class UserModelHibImp implements UserModelInt {
 		// TODO Auto-generated method stub
 		Session session = null;
 		UserDTO dto = null;
+		
 		try {
 			session = HibDataSource.getSession();
 			dto = (UserDTO) session.get(UserDTO.class, pk);
@@ -154,6 +164,7 @@ public class UserModelHibImp implements UserModelInt {
 		} finally {
 			session.close();
 		}
+		
 
 		return dto;
 	}
@@ -286,7 +297,7 @@ public class UserModelHibImp implements UserModelInt {
 					criteria.add(Restrictions.like("gender", dto.getGender() + "%"));
 				}
 				if (dto.getDob() != null && dto.getDob().getDate() > 0) {
-					criteria.add(Restrictions.like("dob", dto.getDob()));
+					criteria.add(Restrictions.eq("dob", dto.getDob()));
 				}
 				if (dto.getLastLogin() != null && dto.getLastLogin().getTime() > 0) {
 					criteria.add(Restrictions.eq("lastLogin", dto.getLastLogin()));
@@ -516,6 +527,31 @@ public class UserModelHibImp implements UserModelInt {
 		EmailUtility.sendMail(msg);
 
 		return pk;
+	}
+
+	public void UpdateRegisterUser(UserDTO dto) throws ApplicationException, DuplicateRecordException {
+		// TODO Auto-generated method stub
+		UserModelHibImp model = new UserModelHibImp();
+		model.update(dto);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("fName", dto.getFirstName());
+		map.put("lName", dto.getLastName());
+		map.put("login", dto.getLogin());
+		map.put("mobileNo", dto.getMobileNo());
+		map.put("gender", dto.getGender());
+		map.put("DOB", dto.getDob());
+
+		String message = EmailBuilder.getUpdateUserMessage(map);
+
+		EmailMessage msg = new EmailMessage();
+
+		msg.setTo(dto.getLogin());
+		msg.setSubject("User updating is successful for ORS Project SUNRAYS Technologies");
+		msg.setMessage(message);
+		msg.setMessageType(EmailMessage.HTML_MSG);
+
+		EmailUtility.sendMail(msg);
+
 	}
 
 }

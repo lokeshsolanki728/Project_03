@@ -3,17 +3,18 @@
 		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
 		"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
-
 	<session-factory>
+
+
 		<property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+
+
+
+
 		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/proj3</property>
 
-		<!-- Connection for Docker -->
-		<!-- <property name="hibernate.connection.url">jdbc:mysql://mysql:3306/proj3</property> -->
-
-		<!-- Connection for aws -->
-		<!-- <property name="hibernate.connection.username">rays</property> <property 
-			name="hibernate.connection.password">indore@123</property> -->
+		<!-- <property name="hibernate.connection.username">root</property> <property 
+			name="hibernate.connection.password">root</property> -->
 
 
 		<property name="hibernate.connection.username">root</property>
@@ -28,7 +29,7 @@
 
 
 
-		<!-- <property name="hibernate.cache.provider_class"> org.hibernate.cache.EhCacheProvider</property> 
+		<!-- <property name="hibernate.cache.provider_class"> org.hib ernate.cache.EhCacheProvider</property> 
 			<property name="hibernate.cache.use_second_level_cache"> true</property> -->
 
 		<!-- hibernate DCP c3p0 Configuration -->
@@ -38,15 +39,15 @@
 			20 <property name="hibernate.c3p0.max_statements">50</property> <property 
 			name="hibernate.c3p0.idle_test_period">3000</property> -->
 
+
+
 		<mapping resource="in/co/rays/project_3/hbm/UserDTO.hbm.xml" />
-		<mapping resource="in/co/rays/project_3/hbm/RoleDTO.hbm.xml" />
 		<mapping
 			resource="in/co/rays/project_3/hbm/StudentDTO.hbm.xml" />
-
 		<mapping
 			resource="in/co/rays/project_3/hbm/CollegeDTO.hbm.xml" />
 		<mapping resource="in/co/rays/project_3/hbm/CourseDTO.hbm.xml" />
-
+		<mapping resource="in/co/rays/project_3/hbm/RoleDTO.hbm.xml" />
 		<mapping
 			resource="in/co/rays/project_3/hbm/MarksheetDTO.hbm.xml" />
 		<mapping
@@ -56,15 +57,58 @@
 		<mapping
 			resource="in/co/rays/project_3/hbm/SubjectDTO.hbm.xml" />
 
-		<mapping resource="in/co/rays/project_3/hbm/BankDTO.hbm.xml" />
 
-		<mapping resource="in/co/rays/project_3/hbm/ClientDTO.hbm.xml" />
 
 		<mapping
-			resource="in/co/rays/project_3/hbm/JobRequirementDTO.hbm.xml" />
+			resource="in/co/rays/project_3/hbm/EmployeeDTO.hbm.xml" />
+
+
+		<mapping
+			resource="in/co/rays/project_3/hbm/QualityDTO.hbm.xml" />
+
+		<mapping
+			resource="in/co/rays/project_3/hbm/ShoppingDTO.hbm.xml" />
+		<mapping
+			resource="in/co/rays/project_3/hbm/ProductDTO.hbm.xml" />
+		<mapping resource="in/co/rays/project_3/hbm/WishDTO.hbm.xml" />
+
+		<mapping resource="in/co/rays/project_3/hbm/JobDTO.hbm.xml" />
+		<mapping resource="in/co/rays/project_3/hbm/StatusDTO.hbm.xml" />
+
+		<mapping resource="in/co/rays/project_3/hbm/ClientDTO.hbm.xml" />
+		<mapping
+			resource="in/co/rays/project_3/hbm/PriorityDTO.hbm.xml" />
+
 		<mapping resource="in/co/rays/project_3/hbm/IssueDTO.hbm.xml" />
-	<mapping resource="in/co/rays/project_3/hbm/InventoryDTO.hbm.xml"/>
+		<mapping
+			resource="in/co/rays/project_3/hbm/ProjectDTO.hbm.xml" />
+		<mapping resource="in/co/rays/project_3/hbm/FieldDTO.hbm.xml" />
+
 		<mapping resource="in/co/rays/project_3/hbm/SalaryDTO.hbm.xml" />
+		<mapping resource="in/co/rays/project_3/hbm/DoctorDTO.hbm.xml" />
+		<mapping
+			resource="in/co/rays/project_3/hbm/PrescriptionDTO.hbm.xml" />
+		<mapping
+			resource="in/co/rays/project_3/hbm/PatientDTO.hbm.xml" />
+		<mapping resource="in/co/rays/project_3/hbm/OrderDTO.hbm.xml" />
+
+         <mapping resource="in/co/rays/project_3/hbm/VehicleTrackingDTO.hbm.xml" />
+         <mapping resource="in/co/rays/project_3/hbm/SupplierDTO.hbm.xml" />
+         <mapping resource="in/co/rays/project_3/hbm/InventoryDTO.hbm.xml" />
+         <mapping resource="in/co/rays/project_3/hbm/TransportationDTO.hbm.xml" />
+         
+         
+         
+         
+         
+
+
+
+
+
+
+
+
 
 		<!--<mapping class="in.co.rays.project_3.dto.UserDTO"/> <mapping class="in.co.rays.project_3.dto.CollegeDTO"/> 
 			<mapping class="in.co.rays.project_3.dto.CourseDTO"/> <mapping class="in.co.rays.project_3.dto.FacultyDTO"/> 

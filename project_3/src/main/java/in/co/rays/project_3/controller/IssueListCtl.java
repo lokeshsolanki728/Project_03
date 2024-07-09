@@ -1,7 +1,9 @@
+
 package in.co.rays.project_3.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -12,48 +14,55 @@ import javax.servlet.http.HttpServletResponse;
 import in.co.rays.project_3.dto.BaseDTO;
 import in.co.rays.project_3.dto.IssueDTO;
 import in.co.rays.project_3.exception.ApplicationException;
-import in.co.rays.project_3.model.IssueModelInt;
 import in.co.rays.project_3.model.ModelFactory;
+import in.co.rays.project_3.model.IssueModelInt;
+import in.co.rays.project_3.model.QualityModelInt;
 import in.co.rays.project_3.model.RoleModelInt;
+import in.co.rays.project_3.model.UserModelInt;
 import in.co.rays.project_3.util.DataUtility;
 import in.co.rays.project_3.util.PropertyReader;
 import in.co.rays.project_3.util.ServletUtility;
 
-@WebServlet(name = " IssueListCtl", urlPatterns = { "/ctl/IssueListCtl" })
+@WebServlet(name = "IssueListCtl", urlPatterns = "/ctl/IssueListCtl")
 public class IssueListCtl extends BaseCtl {
 
-
+	
 	protected void preload(HttpServletRequest request) {
-		RoleModelInt model = ModelFactory.getInstance().getRoleModel();
-		IssueModelInt jmodel = ModelFactory.getInstance().getIssueModel();
+		HashMap map = new HashMap();
+		map.put("ram", "ram");
+		map.put("sagar", "sagar");
+		map.put("rahul", "rahul");
 
-		try {
-			List list = jmodel.list(0, 0);
-			request.setAttribute("nameList", list);
-		} catch (Exception e) {
+request.setAttribute("assign", map);
+
+
+
+HashMap map1 = new HashMap();
+map1.put("progress", "progress");
+map1.put("hold", "hold");
+map1.put("close", "close");
+
+request.setAttribute("statusp", map1);
 
 		}
-	}
+	
+	
 
 	@Override
 	protected BaseDTO populateDTO(HttpServletRequest request) {
 		IssueDTO dto = new IssueDTO();
 
-
-		//dto.setId(DataUtility.getLong(request.getParameter("id")));
-
 		dto.setTitle(DataUtility.getString(request.getParameter("title")));
-		dto.setOpenDate(DataUtility.getDate(request.getParameter("openDate")));
-		dto.setDescription(DataUtility.getString(request.getParameter("description")));
-		dto.setAssignTo(DataUtility.getString(request.getParameter("assignTo")));
-		dto.setStatus(DataUtility.getString(request.getParameter("status")));
-		populateBean(dto,request);
-		
+		 dto.setDescription(DataUtility.getString(request.getParameter("description")));
+        dto.setStatus(DataUtility.getString(request.getParameter("status")));
+        dto.setAssignTo(DataUtility.getString(request.getParameter("assignTo")));
+        dto.setOpenDate(DataUtility.getDate(request.getParameter("openDate")));
+
+
 		populateBean(dto, request);
 		return dto;
 	}
 
-	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		List list;
@@ -66,7 +75,7 @@ public class IssueListCtl extends BaseCtl {
 		try {
 			list = model.search(dto, pageNo, pageSize);
 
-			ArrayList<IssueDTO> a = (ArrayList<IssueDTO>) list;
+			ArrayList a = (ArrayList<IssueDTO>) list;
 
 			next = model.search(dto, pageNo + 1, pageSize);
 			ServletUtility.setList(list, request);
@@ -112,7 +121,7 @@ public class IssueListCtl extends BaseCtl {
 			if (OP_SEARCH.equalsIgnoreCase(op) || "Next".equalsIgnoreCase(op) || "Previous".equalsIgnoreCase(op)) {
 
 				if (OP_SEARCH.equalsIgnoreCase(op)) {
-					
+
 					pageNo = 1;
 				} else if (OP_NEXT.equalsIgnoreCase(op)) {
 					pageNo++;
@@ -146,7 +155,7 @@ public class IssueListCtl extends BaseCtl {
 			}
 			dto = (IssueDTO) populateDTO(request);
 			list = model.search(dto, pageNo, pageSize);
-
+		
 			ServletUtility.setDto(dto, request);
 			next = model.search(dto, pageNo + 1, pageSize);
 
@@ -181,5 +190,4 @@ public class IssueListCtl extends BaseCtl {
 	protected String getView() {
 		return ORSView.ISSUE_LIST_VIEW;
 	}
-
 }

@@ -17,6 +17,7 @@
         <property name="description" type="java.lang.String">
             <column name="DESCRIPTION" />
         </property>
+        
         <property name="createdBy" type="java.lang.String" length="50">
 			<column name="CREATED_BY" />
 		</property>

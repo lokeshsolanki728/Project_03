@@ -1,5 +1,6 @@
-<%@page import="java.util.List"%>
+
 <%@page import="in.co.rays.project_3.controller.InventoryCtl"%>
+<%@page import="java.util.List"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="in.co.rays.project_3.util.HTMLUtility"%>
 <%@page import="in.co.rays.project_3.util.DataUtility"%>
@@ -11,41 +12,36 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Issue view</title>
+<title>Inventory view</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script>
-	function validateMobileNo(event) {
-		const input = event.target;
-		input.value = input.value.replace(/[^0-9.]/g, '');
-		if (input.value.length > 0 && input.value[0] <= '5') {
 
-			input.value = '';
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script type="text/javascript">
+	function numberLength(input) {
+		if (input.value.length > 10) {
+			input.value = input.value.slice(0, 10);
 		}
 	}
-	function validateVersion(event) {
-		const input = event.target;
-		input.value = input.value.replace(/[^0-9.]/g, '');
-	}
 </script>
-<script src="<%=ORSView.APP_CONTEXT%>/js/ValidateToInput.js"></script>
+<script src="<%=ORSView.APP_CONTEXT%>/js/validateInput.js"></script>
 <style type="text/css">
 i.css {
-	border: 2px solid #8080803b;
+	bInventory: 2px solid #8080803b;
 	padding-left: 10px;
 	padding-bottom: 11px;
 	background-color: #ebebe0;
 }
 
 .input-group-addon {
-	/* box-shadow: 9px 8px 7px #001a33; */
-	background-image: linear-gradient(to bottom right, orange, black);
+	box-shadow: 9px 8px 7px #001a33;
+	background-image: linear-gradient(to bottom right, white, pink);
 	background-repeat: no repeat;
 	background-size: 100%;
 	padding-bottom: 11px;
 }
 
 .hm {
-	background-image: url('<%=ORSView.APP_CONTEXT%>/img/unsplash.jpg');
+	background-image: url('<%=ORSView.APP_CONTEXT%>/img/download (3).jpeg');
 	background-size: cover;
 	padding-top: 6%;
 }
@@ -84,12 +80,10 @@ i.css {
 							<%
 								}
 							%>
-							<!--Body-->
+
 							<div>
 								<%
-									List list = (List) request.getAttribute("roleList");
-									List list1 = (List) request.getAttribute("list1");
-									HashMap map = (HashMap) request.getAttribute("map");
+									HashMap map = (HashMap) request.getAttribute("productp");
 								%>
 
 								<H4 align="center">
@@ -123,26 +117,10 @@ i.css {
 
 							</div>
 
+
+
 							<div class="md-form">
-
-								<span class="pl-sm-5"><b>  Last Update Date</b> <span
-									style="color: red;">*</span></span></br>
-								<div class="col-sm-12">
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<div class="input-group-text">
-												<i class="fa fa-calendar grey-text" style="font-size: 1rem;"></i>
-											</div>
-										</div>
-										<input type="text" name="date" id="datepicker2"
-											readonly="readonly" class="form-control"
-											placeholder="Enter Date"
-											value="<%=DataUtility.getDateString(dto.getLastUpdateDate())%>">
-									</div>
-								</div>
-								<font color="red" class="pl-sm-5"> <%=ServletUtility.getErrorMessage("date", request)%></font></br>
-
-								<span class="pl-sm-5"><b> Supplier Name</b> <span
+								<span class="pl-sm-5"><b>SupplierName</b> <span
 									style="color: red;">*</span></span> </br>
 								<div class="col-sm-12">
 									<div class="input-group">
@@ -151,55 +129,68 @@ i.css {
 												<i class="fa fa-user-alt grey-text" style="font-size: 1rem;"></i>
 											</div>
 										</div>
-										<input type="text" class="form-control" name="name"
-											onkeypress="return validateInput(event)"
-											placeholder="Enter Supplier Name" maxlength="38"
+										<input type="text" class="form-control" name="supplierName"
+											onkeypress="return validateInput(event)" maxlength="30"
+											placeholder="Enter Name"
 											value="<%=DataUtility.getStringData(dto.getSupplierName())%>">
 									</div>
 								</div>
-								<font color="red" class="pl-sm-5"> <%=ServletUtility.getErrorMessage("name", request)%></font></br>
+
+								<font color="red" class="pl-sm-5"> <%=ServletUtility.getErrorMessage("supplierName", request)%></font></br>
+
+								<span class="pl-sm-5"><b>Quantity</b> <span
+									style="color: red;">*</span></span> </br>
+								<div class="col-sm-12">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<div class="input-group-text">
+												<i class="fa fa-phone-square grey-text"
+													style="font-size: 1rem;"></i>
+											</div>
+										</div>
+										<input type="number" class="form-control" 
+											 name="quantity"  oninput="numberLength(this)" maxlength="10"
+											placeholder="Enter Quantity"
+											value="<%=DataUtility.getStringData(dto.getQuantity()).equals("0")? "" : DataUtility.getStringData(dto.getQuantity())%>">
+
+									</div>
+								</div>
+								<font color="red" class="pl-sm-5"> <%=ServletUtility.getErrorMessage("quantity", request)%></font></br>
 
 
-								
 
-								<span class="pl-sm-5"><b> Quantity</b> <span
+								<span class="pl-sm-5"><b>Product</b><span
 									style="color: red;">*</span></span></br>
 								<div class="col-sm-12">
 									<div class="input-group">
 										<div class="input-group-prepend">
 											<div class="input-group-text">
-												<i class="fa fa-list grey-text" style="font-size: 1rem;"></i>
+												<i class="fa fa-user grey-text" style="font-size: 1rem;"></i>
 											</div>
 										</div>
-										<input type="text" class="form-control" name="quantity" rows="3" 
-											oninput="validateVersion(event)" cols="3" 
-											placeholder="Enter Quantity" maxlength="9"
-											value="<%=DataUtility.getIntt(dto.getQuantity())%>">
+										<%=HTMLUtility.getList("product", String.valueOf(dto.getProduct()), map)%>
 									</div>
-								</div>
-								<font color="red" class="pl-sm-5"> <%=ServletUtility.getErrorMessage("quantity", request)%></font></br>
-
-								
-								<span class="pl-sm-5"><b>Product</b><span
-									style="color: red;">*</span></span> </br>
-
-								<div class="col-sm-12">
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<div class="input-group-text">
-												<i class="fa fa-venus-mars grey-text"
-													style="font-size: 1rem;"></i>
-											</div>
-										</div>
-
-										<%
-											String htmlList = HTMLUtility.getList("product", dto.getProduct(), map);
-										%>
-										<%=htmlList%></div>
 								</div>
 								<font color="red" class="pl-sm-5"> <%=ServletUtility.getErrorMessage("product", request)%></font></br>
 
 
+
+								<span class="pl-sm-5"><b>LastUpdateDate</b> <span
+									style="color: red;">*</span></span></br>
+								<div class="col-sm-12">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<div class="input-group-text">
+												<i class="fa fa-calendar grey-text" style="font-size: 1rem;"></i>
+											</div>
+										</div>
+										<input type="text" id="datepicker2" name="lastUpdateDate"
+											class="form-control" placeholder=" Enter LastUpdateDate "
+											readonly="readonly"
+											value="<%=DataUtility.getDateString(dto.getLastUpdateDate())%>">
+									</div>
+								</div>
+								<font color="red" class="pl-sm-5"> <%=ServletUtility.getErrorMessage("lastUpdateDate", request)%></font></br>
 								<%
 									if (dto.getId() != null && id > 0) {
 								%>
@@ -208,7 +199,7 @@ i.css {
 
 									<input type="submit" name="operation"
 										class="btn btn-success btn-md" style="font-size: 17px"
-										value="<%=InventoryCtl.OP_SAVE%>"> <input type="submit"
+										value="<%=InventoryCtl.OP_UPDATE%>"> <input type="submit"
 										name="operation" class="btn btn-warning btn-md"
 										style="font-size: 17px" value="<%=InventoryCtl.OP_CANCEL%>">
 

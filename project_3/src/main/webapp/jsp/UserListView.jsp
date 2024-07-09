@@ -16,14 +16,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>User List</title>
 <script src="<%=ORSView.APP_CONTEXT%>/js/jquery.min.js"></script>
-<script type="text/javascript"
-	src="<%=ORSView.APP_CONTEXT%>/js/CheckBox11.js"></script>
+<script type="text/javascript" src="<%=ORSView.APP_CONTEXT%>/js/CheckBox11.js"></script>
 <style>
 .hm {
-	background-image: url('<%=ORSView.APP_CONTEXT%>/img/rain.jpg');
-	background-size: cover;
-	background-repeat: no-repeate;
-	padding-top: 6%;
+	 background-image: url('<%=ORSView.APP_CONTEXT%>/img/world-1302934__480.jpg'); 
+	  /*  background-image: linear-gradient(to bottom right, blue, pink, white); */
+	  background-size:cover;
+	 background-repeat: no-repeat; 
 }
 
 .p1 {
@@ -39,16 +38,18 @@
 </head>
 
 <body class="hm">
-	<%@include file="Header.jsp"%>
-	<%@include file="calendar.jsp"%>
-	<div></div>
+<%@include file="Header.jsp"%>
+<%@include file ="calendar.jsp" %>
+	<div>
+	<h1>rtfyguhjk</h1>
+</div>
 	<div>
 		<form class="pb-5" action="<%=ORSView.USER_LIST_CTL%>" method="post">
 			<jsp:useBean id="dto" class="in.co.rays.project_3.dto.UserDTO"
 				scope="request"></jsp:useBean>
 			<%
 				List list1 = (List) request.getAttribute("roleList");
-			List uList = (List) request.getAttribute("uList");
+			  List ulist = (List) request.getAttribute("firstName");
 			%>
 
 
@@ -67,7 +68,7 @@
 			%>
 			<center>
 				<h1 class="text-primary font-weight-bold pt-3">
-					<u>User List</u>
+					User List
 				</h1>
 			</center>
 			<div class="row">
@@ -115,38 +116,38 @@
 						class="form-control"
 						value="<%=ServletUtility.getParameter("firstName", request)%>">
 				</div>
-
+		<%-- 		
+		  &emsp;
+				<div class="col-sm-2"><%=HTMLUtility.getList("firstName", String.valueOf(dto.getFirstName()), ulist)%></div>   
+&emsp; --%>
+			
 				&emsp;
 				<div class="col-sm-2">
 					<input type="text" name="login" placeholder="Enter Login Id"
 						class="form-control"
 						value="<%=ServletUtility.getParameter("login", request)%>">
 				</div>
-				&emsp;
-				<div class="col-sm-2"><%=HTMLUtility.getList("Role", String.valueOf(dto.getRoleId()), list1)%></div>
-				&emsp;
-				<%-- &emsp;
-				<div class="col-sm-2"><%=HTMLUtility.getList("fName", String.valueOf(dto.getFirstName()), uList)%></div>
-				&emsp; --%>
-			<%-- 		
+				 &emsp;
+				<div class="col-sm-2"><%=HTMLUtility.getList("Role", String.valueOf(dto.getRoleId()), list1)%></div> 
+				
+				 <%--  &emsp;
+				<div class="col-sm-2"><%=HTMLUtility.getList("lastName", String.valueOf(dto.getLastName()), ulist)%></div> --%>  
+&emsp;
+			<%-- 	
 				<div class="col-sm-2">
 					<input type="text" name="dob" class="form-control" placeholder="Enter Date Of Birth" id="datepicker" readonly="readonly"
 							value="<%=DataUtility.getDateString(dto.getDob())%>">
 				</div> --%>
-					<%-- <div class="col-sm-2">
-					<input type="text" name="dob" class="form-control" placeholder="Enter Date Of Birth"
-							value="<%=DataUtility.getDateString(dto.getDob())%>">
-				</div>
- --%>
+				
 				<div class="col-sm-2">
-					<input type="submit" class="btn btn-primary btn-md"
-						style="font-size: 15px" name="operation"
-						value="<%=UserListCtl.OP_SEARCH%>"> &emsp; <input
-						type="submit" class="btn btn-dark btn-md" style="font-size: 15px"
+					<input type="submit" class="btn btn-primary btn-md" style="font-size: 15px" name="operation"
+						value="<%=UserListCtl.OP_SEARCH%>">
+						&emsp;
+						 <input type="submit" class="btn btn-dark btn-md" style="font-size: 15px"
 						name="operation" value="<%=UserListCtl.OP_RESET%>">
 				</div>
-
-
+				
+				
 				<div class="col-sm-2"></div>
 			</div>
 
@@ -154,7 +155,7 @@
 			<div style="margin-bottom: 20px;" class="table-responsive">
 				<table class="table table-bordered table-dark table-hover">
 					<thead>
-						<tr style="background-color: blue;">
+						<tr style="background-color: #8C8C8C;">
 
 							<th width="10%"><input type="checkbox" id="select_all"
 								name="Select" class="text"> Select All</th>
@@ -180,7 +181,7 @@
 								name="ids" value="<%=dto.getId()%>"
 								<%if (dto.getRoleId() == RoleDTO.ADMIN) {%> <%="disabled"%>
 								<%}%>></td>
-							<td class="text"><%=index++%></td>.
+							<td class="text"><%=index++%></td>
 							<td class="text"><%=dto.getFirstName()%></td>
 							<td class="text"><%=dto.getLastName()%></td>
 							<td class="text"><%=dto.getLogin()%></td>
@@ -199,22 +200,15 @@
 			</div>
 			<table width="100%">
 				<tr>
-					<td><input type="submit" name="operation"
-						class="btn btn-warning btn-md" style="font-size: 17px"
-						value="<%=UserListCtl.OP_PREVIOUS%>"
+					<td><input type="submit" name="operation" class="btn btn-warning btn-md" style="font-size: 17px" value="<%=UserListCtl.OP_PREVIOUS%>"
+						
 						<%=pageNo > 1 ? "" : "disabled"%>></td>
+					
+					<td><input type="submit" name="operation" class="btn btn-primary btn-md" style="font-size: 17px" value="<%=UserListCtl.OP_NEW%>"></td>
+					
+					<td><input type="submit" name="operation" class="btn btn-danger btn-md" style="font-size: 17px" value="<%=UserListCtl.OP_DELETE%>"></td>
 
-					<td><input type="submit" name="operation"
-						class="btn btn-primary btn-md" style="font-size: 17px"
-						value="<%=UserListCtl.OP_NEW%>"></td>
-
-					<td><input type="submit" name="operation"
-						class="btn btn-danger btn-md" style="font-size: 17px"
-						value="<%=UserListCtl.OP_DELETE%>"></td>
-
-					<td align="right"><input type="submit" name="operation"
-						class="btn btn-warning btn-md" style="font-size: 17px"
-						style="padding: 5px;" value="<%=UserListCtl.OP_NEXT%>"
+					<td align="right"><input type="submit" name="operation" class="btn btn-warning btn-md" style="font-size: 17px" style="padding: 5px;" value="<%=UserListCtl.OP_NEXT%>"
 						<%=(nextPageSize != 0) ? "" : "disabled"%>></td>
 				</tr>
 				<tr></tr>
@@ -243,8 +237,6 @@
 				<%
 					}
 				%>
-
-
 
 
 				<%

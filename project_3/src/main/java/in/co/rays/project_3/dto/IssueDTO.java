@@ -2,12 +2,18 @@ package in.co.rays.project_3.dto;
 
 import java.util.Date;
 
-public class IssueDTO extends BaseDTO {
+public class IssueDTO extends BaseDTO{
+	
+	
+	
 	private Date openDate;
 	private String title;
 	private String description;
-	private String assignTo;
 	private String status;
+	private String assignTo;
+	
+	
+	
 
 	public Date getOpenDate() {
 		return openDate;
@@ -33,14 +39,6 @@ public class IssueDTO extends BaseDTO {
 		this.description = description;
 	}
 
-	public String getAssignTo() {
-		return assignTo;
-	}
-
-	public void setAssignTo(String assignTo) {
-		this.assignTo = assignTo;
-	}
-
 	public String getStatus() {
 		return status;
 	}
@@ -49,16 +47,24 @@ public class IssueDTO extends BaseDTO {
 		this.status = status;
 	}
 
+	public String getAssignTo() {
+		return assignTo;
+	}
+
+	public void setAssignTo(String assignTo) {
+		this.assignTo = assignTo;
+	}
+
 	@Override
 	public String getKey() {
-
-		return assignTo;
+		
+		return null;
 	}
 
 	@Override
 	public String getValue() {
-
-		return assignTo;
+		
+		return null;
 	}
 
 }

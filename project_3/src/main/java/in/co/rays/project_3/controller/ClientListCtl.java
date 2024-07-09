@@ -1,3 +1,4 @@
+
 package in.co.rays.project_3.controller;
 
 import java.io.IOException;
@@ -15,45 +16,35 @@ import in.co.rays.project_3.dto.ClientDTO;
 import in.co.rays.project_3.exception.ApplicationException;
 import in.co.rays.project_3.model.ClientModelInt;
 import in.co.rays.project_3.model.ModelFactory;
-import in.co.rays.project_3.model.RoleModelInt;
+import in.co.rays.project_3.model.PriorityModelInt;
 import in.co.rays.project_3.util.DataUtility;
 import in.co.rays.project_3.util.PropertyReader;
 import in.co.rays.project_3.util.ServletUtility;
 
-@WebServlet(name = " ClientListCtl", urlPatterns = { "/ctl/ClientListCtl" })
+@WebServlet(name = "ClientListCtl", urlPatterns = "/ctl/ClientListCtl")
 public class ClientListCtl extends BaseCtl {
 
 	protected void preload(HttpServletRequest request) {
-		RoleModelInt model = ModelFactory.getInstance().getRoleModel();
-		ClientModelInt cmodel = ModelFactory.getInstance().getClientModel();
-		HashMap<String, String> map = new HashMap<String, String>();
-		map.put("Low", "Low");
-		map.put("Medium", "Medium");
-		map.put("High", "High");
-		request.setAttribute("map", map);
-		try {
-			List list = cmodel.list(0, 0);
-			request.setAttribute("nameList", list);
-		} catch (Exception e) {
+		HashMap map = new HashMap();
+		map.put("high", "high");
+		map.put("middle", "middle");
+		map.put("low", "low");
+		
 
-		}
+		request.setAttribute("priorityp", map);
+
 	}
 
 	@Override
 	protected BaseDTO populateDTO(HttpServletRequest request) {
 		ClientDTO dto = new ClientDTO();
 
-		//dto.setId(DataUtility.getLong(request.getParameter("id")));
 		dto.setName(DataUtility.getString(request.getParameter("name")));
-		dto.setDate(DataUtility.getDate(request.getParameter("date")));
-		dto.setAddress(DataUtility.getString(request.getParameter("address")));
-		dto.setPhone(DataUtility.getString(request.getParameter("phone")));
-		dto.setPriority(DataUtility.getString(request.getParameter("priority")));
-		try {
-		dto.setVersion(Double.parseDouble((request.getParameter("version"))));
-		}catch(NumberFormatException e){
-			System.out.println("invalid vaersion");
-		}
+		 dto.setPhone(DataUtility.getLong(request.getParameter("phone")));
+        dto.setPriority(DataUtility.getString(request.getParameter("priority")));
+        dto.setAddress(DataUtility.getString(request.getParameter("address")));
+
+
 		populateBean(dto, request);
 		return dto;
 	}
@@ -64,13 +55,13 @@ public class ClientListCtl extends BaseCtl {
 		List next;
 		int pageNo = 1;
 		int pageSize = DataUtility.getInt(PropertyReader.getValue("page.size"));
-		ClientDTO dto = new ClientDTO();
+		ClientDTO dto = (ClientDTO) populateDTO(request);
 
 		ClientModelInt model = ModelFactory.getInstance().getClientModel();
 		try {
 			list = model.search(dto, pageNo, pageSize);
 
-			ArrayList<ClientDTO> a = (ArrayList<ClientDTO>) list;
+			ArrayList a = (ArrayList<ClientDTO>) list;
 
 			next = model.search(dto, pageNo + 1, pageSize);
 			ServletUtility.setList(list, request);
@@ -99,9 +90,6 @@ public class ClientListCtl extends BaseCtl {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		String op = DataUtility.getString(request.getParameter("operation"));
-
 		List list = null;
 		List next = null;
 		int pageNo = DataUtility.getInt(request.getParameter("pageNo"));
@@ -110,6 +98,7 @@ public class ClientListCtl extends BaseCtl {
 		pageNo = (pageNo == 0) ? 1 : pageNo;
 		pageSize = (pageSize == 0) ? DataUtility.getInt(PropertyReader.getValue("page.size")) : pageSize;
 		ClientDTO dto = (ClientDTO) populateDTO(request);
+		String op = DataUtility.getString(request.getParameter("operation"));
 
 		String[] ids = request.getParameterValues("ids");
 		ClientModelInt model = ModelFactory.getInstance().getClientModel();
@@ -118,8 +107,8 @@ public class ClientListCtl extends BaseCtl {
 			if (OP_SEARCH.equalsIgnoreCase(op) || "Next".equalsIgnoreCase(op) || "Previous".equalsIgnoreCase(op)) {
 
 				if (OP_SEARCH.equalsIgnoreCase(op)) {
-					pageNo = 1;
 
+					pageNo = 1;
 				} else if (OP_NEXT.equalsIgnoreCase(op)) {
 					pageNo++;
 				} else if (OP_PREVIOUS.equalsIgnoreCase(op) && pageNo > 1) {
@@ -127,11 +116,11 @@ public class ClientListCtl extends BaseCtl {
 				}
 
 			} else if (OP_NEW.equalsIgnoreCase(op)) {
-				ServletUtility.redirect(ORSView.SALARY_CTL, request, response);
+				ServletUtility.redirect(ORSView.CLIENT_CTL, request, response);
 				return;
 			} else if (OP_RESET.equalsIgnoreCase(op)) {
 
-				ServletUtility.redirect(ORSView.SALARY_LIST_CTL, request, response);
+				ServletUtility.redirect(ORSView.CLIENT_LIST_CTL, request, response);
 				return;
 			} else if (OP_DELETE.equalsIgnoreCase(op)) {
 				pageNo = 1;
@@ -152,7 +141,7 @@ public class ClientListCtl extends BaseCtl {
 			}
 			dto = (ClientDTO) populateDTO(request);
 			list = model.search(dto, pageNo, pageSize);
-
+		
 			ServletUtility.setDto(dto, request);
 			next = model.search(dto, pageNo + 1, pageSize);
 
@@ -178,6 +167,7 @@ public class ClientListCtl extends BaseCtl {
 			ServletUtility.handleException(e, request, response);
 			return;
 		} catch (Exception e) {
+// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -186,5 +176,4 @@ public class ClientListCtl extends BaseCtl {
 	protected String getView() {
 		return ORSView.CLIENT_LIST_VIEW;
 	}
-
 }

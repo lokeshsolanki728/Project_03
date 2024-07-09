@@ -1,4 +1,4 @@
-package in.co.rays.project_3.controller;
+	package in.co.rays.project_3.controller;
 
 import java.io.IOException;
 
@@ -22,6 +22,7 @@ import in.co.rays.project_3.util.ServletUtility;
  */
 @WebFilter(urlPatterns={"/ctl/*","/doc/*"})
 public class FrontController implements Filter {
+	
 	public void init(FilterConfig conf) throws ServletException {
 	}
 
@@ -37,8 +38,7 @@ public class FrontController implements Filter {
 		request.setAttribute("uri", uri);
 		
 		if (session.getAttribute("user") == null) {
-		//	request.setAttribute("error", "Your session is expired. Please Re-Login");
-			ServletUtility.setErrorMessage("Your session is expired. Please Re-Login",request );
+			request.setAttribute("error", "Your session is expired. Please Re-Login");
 			ServletUtility.forward(ORSView.LOGIN_VIEW, request, response);
 		} else {
 			chain.doFilter(req, resp);

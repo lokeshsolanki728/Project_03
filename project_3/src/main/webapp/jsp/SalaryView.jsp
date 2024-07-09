@@ -1,6 +1,8 @@
-<%@page import="in.co.rays.project_3.controller.SalaryCtl"%>
+
 <%@page import="java.util.List"%>
-<%@page import="in.co.rays.project_3.controller.ClientCtl"%>
+<%@page import="in.co.rays.project_3.controller.SalaryCtl"%>
+
+
 <%@page import="java.util.HashMap"%>
 <%@page import="in.co.rays.project_3.util.HTMLUtility"%>
 <%@page import="in.co.rays.project_3.util.DataUtility"%>
@@ -12,45 +14,38 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Issue view</title>
+<title>Salary view</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script>
-	function validateMobileNo(event) {
-		const input = event.target;
-		input.value = input.value.replace(/[^0-9.]/g, '');
-		if (input.value.length > 0 && input.value[0] <= '5') {
-
-			input.value = '';
-		}
-	}
-	function validateVersion(event) {
-		const input = event.target;
-		input.value = input.value.replace(/[^0-9.]/g, '');
-	}
-</script>
-<script src="<%=ORSView.APP_CONTEXT%>/js/ValidateToInput.js"></script>
 <style type="text/css">
 i.css {
-	border: 2px solid #8080803b;
+	bSalary: 2px solid #8080803b;
 	padding-left: 10px;
 	padding-bottom: 11px;
 	background-color: #ebebe0;
 }
 
 .input-group-addon {
-	/* box-shadow: 9px 8px 7px #001a33; */
-	background-image: linear-gradient(to bottom right, orange, black);
+	box-shadow: 9px 8px 7px #001a33;
+	background-image: linear-gradient(to bottom right, white, pink);
 	background-repeat: no repeat;
 	background-size: 100%;
 	padding-bottom: 11px;
 }
 
 .hm {
-	background-image: url('<%=ORSView.APP_CONTEXT%>/img/unsplash.jpg');
+	background-image: url('<%=ORSView.APP_CONTEXT%>/img/download (3).jpeg');
 	background-size: cover;
 	padding-top: 6%;
 }
 </style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script type="text/javascript">
+	function numberLength(input) {
+		if (input.value.length > 10) {
+			input.value = input.value.slice(0, 10);
+		}
+	}
+</script>
 
 </head>
 <body class="hm">
@@ -85,12 +80,14 @@ i.css {
 							<%
 								}
 							%>
-							<!--Body-->
+							
 							<div>
-								<%
-									HashMap mapo = (HashMap) request.getAttribute("mapo");
-									 HashMap pap = (HashMap) request.getAttribute("pap"); 
+							
+							
+							<%
+									HashMap map1  = (HashMap) request.getAttribute("statusp");
 								%>
+							
 								
 
 								<H4 align="center">
@@ -126,7 +123,73 @@ i.css {
 
 							<div class="md-form">
 
-								<span class="pl-sm-5"><b> Applied Date</b> <span
+								<span class="pl-sm-5"><b> Employee</b> <span
+									style="color: red;">*</span></span> </br>
+								<div class="col-sm-12">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<div class="input-group-text">
+												<i class="fa fa-user-alt grey-text" style="font-size: 1rem;"></i>
+											</div>
+										</div>
+										<input type="text" class="form-control" name="employee"
+											placeholder="Enter  Employee"
+											onkeydown="return /[a-zA-Z]/i.test(event.key)" maxlength="30"
+											value="<%=DataUtility.getStringData(dto.getEmployee())%>">
+									</div>
+								</div>
+								<font color="red" class="pl-sm-5"> <%=ServletUtility.getErrorMessage("employee", request)%></font></br>
+
+
+
+
+								<span class="pl-sm-5"><b>Amount</b> <span
+									style="color: red;">*</span></span></br>
+								<div class="col-sm-12">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<div class="input-group-text">
+												<i class="fa fa-user-circle grey-text"
+													style="font-size: 1rem;"></i>
+											</div>
+										</div>
+										<input type="number" class="form-control" name="amount"
+											placeholder="Amount"
+											oninput="numberLength(this)" name="amount"
+											placeholder="Enter amount "
+											value="<%=DataUtility.getStringData(dto.getAmount()).equals("0")? "" : DataUtility.getStringData(dto.getAmount())%>">
+									</div>
+								</div>
+								<font color="red" class="pl-sm-5"> <%=ServletUtility.getErrorMessage("amount", request)%></font></br>
+
+
+								<span class="pl-sm-5"><b>Status</b><span
+									style="color: red;">*</span></span> </br>
+								<div class="col-sm-12">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<div class="input-group-text">
+												<i class="fa fa-venus-mars grey-text"
+													style="font-size: 1rem;"></i>
+											</div>
+										</div>
+
+
+										<%
+											
+											String htmlList1 = HTMLUtility.getList("status", dto.getStatus(), map1);
+										%>
+										<%=htmlList1%></div>
+
+								</div>
+							
+	<font color="red" class="pl-sm-5"> <%=ServletUtility.getErrorMessage("status", request)%></font></br>
+
+
+
+
+
+								<span class="pl-sm-5"><b>AppliedDate</b> <span
 									style="color: red;">*</span></span></br>
 								<div class="col-sm-12">
 									<div class="input-group">
@@ -135,68 +198,13 @@ i.css {
 												<i class="fa fa-calendar grey-text" style="font-size: 1rem;"></i>
 											</div>
 										</div>
-										<input type="text" name="date" id="datepicker2"
-											readonly="readonly" class="form-control"
-											placeholder="Enter Date"
+										<input type="text" id="datepicker2" name="appliedDate"
+											class="form-control" placeholder=" Enter AppliedDate "
+											readonly="readonly"
 											value="<%=DataUtility.getDateString(dto.getAppliedDate())%>">
 									</div>
 								</div>
-								<font color="red" class="pl-sm-5"> <%=ServletUtility.getErrorMessage("date", request)%></font></br>
-
-								<span class="pl-sm-5"><b>Employee</b><span
-									style="color: red;">*</span></span> </br>
-
-								<div class="col-sm-12">
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<div class="input-group-text">
-												<i class="fa fa-venus-mars grey-text"
-													style="font-size: 1rem;"></i>
-											</div>
-										</div>
-
-										<%
-											String htmlList = HTMLUtility.getList("employee", dto.getEmployee(), mapo);
-										%>
-										<%=htmlList%></div>
-								</div>
-								<font color="red" class="pl-sm-5"> <%=ServletUtility.getErrorMessage("employee", request)%></font></br>
-								<span class="pl-sm-5"><b> Amount</b> <span
-									style="color: red;">*</span></span></br>
-								<div class="col-sm-12">
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<div class="input-group-text">
-												<i class="fa fa-list grey-text" style="font-size: 1rem;"></i>
-											</div>
-										</div>
-										<input type="text" class="form-control" name="amount"
-											oninput="validateVersion(event)" placeholder="Enter Address"
-											value="<%=DataUtility.getLongg(dto.getAmount())%>">
-									</div>
-								</div>
-								<font color="red" class="pl-sm-5"> <%=ServletUtility.getErrorMessage("amount", request)%></font></br>
-								<span class="pl-sm-5"><b>Status</b><span
-									style="color: red;">*</span></span> </br>
-
-								<div class="col-sm-12">
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<div class="input-group-text">
-												<i class="fa fa-venus-mars grey-text"
-													style="font-size: 1rem;"></i>
-											</div>
-										</div>
-
-							<%
-
-								String htmlList2 = HTMLUtility.getList("status", dto.getStatus(), pap);
-							%>
-							<%=htmlList2%></div>
-								</div>
-								<font color="red" class="pl-sm-5"> <%=ServletUtility.getErrorMessage("status", request)%></font></br>
-
-
+								<font color="red" class="pl-sm-5"> <%=ServletUtility.getErrorMessage("appliedDate", request)%></font></br>
 								<%
 									if (dto.getId() != null && id > 0) {
 								%>
@@ -205,7 +213,7 @@ i.css {
 
 									<input type="submit" name="operation"
 										class="btn btn-success btn-md" style="font-size: 17px"
-										value="<%=ClientCtl.OP_UPDATE%>"> <input type="submit"
+										value="<%=SalaryCtl.OP_UPDATE%>"> <input type="submit"
 										name="operation" class="btn btn-warning btn-md"
 										style="font-size: 17px" value="<%=SalaryCtl.OP_CANCEL%>">
 

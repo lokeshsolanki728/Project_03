@@ -36,13 +36,13 @@ public class UserListCtl extends BaseCtl {
 
 	protected void preload(HttpServletRequest request) {
 		RoleModelInt model = ModelFactory.getInstance().getRoleModel();
-		UserModelInt umodel= ModelFactory.getInstance().getUserModel();
-		
+		UserModelInt model1 = ModelFactory.getInstance().getUserModel();
 		try {
 			List list = model.list();
-			List ulist = umodel.list();
+			List list1 = model1.list();
+			
 			request.setAttribute("roleList", list);
-			request.setAttribute("uList", ulist);
+			request.setAttribute("firstName", list1);
 		} catch (Exception e) {
 			log.error(e);
 
@@ -54,9 +54,9 @@ public class UserListCtl extends BaseCtl {
 		UserDTO dto = new UserDTO();
 
 		dto.setFirstName(DataUtility.getString(request.getParameter("firstName")));
-		//dto.setFirstName(DataUtility.getString(request.getParameter("fName")));
 
 		dto.setLastName(DataUtility.getString(request.getParameter("lastName")));
+		
 		dto.setDob(DataUtility.getDate(request.getParameter("dob")));
 
 		dto.setLogin(DataUtility.getString(request.getParameter("login")));

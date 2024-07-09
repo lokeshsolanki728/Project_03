@@ -13,13 +13,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>User view</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
- <script type="text/javascript">
-        function validateMaxLength(input) {
-            if (input.value.length > 10) {
-                input.value = input.value.slice(0, 10);
-            }
-        }
-    </script>
+<script type="text/javascript">
+function numberLength(input) {
+	if(input.value.length>10){
+		input.value=input.value.slice(0,10);
+	}
+}
+</script>
 <style type="text/css">
 i.css {
 	border: 2px solid #8080803b;
@@ -30,7 +30,7 @@ i.css {
 
 .input-group-addon {
 	/* box-shadow: 9px 8px 7px #001a33; */
-	background-image: linear-gradient(to bottom right, orange, black);
+	background-image: linear-gradient(to bottom right, pink ,skyblue,white);
 	background-repeat: no repeat;
 	background-size: 100%;
 	padding-bottom: 11px;
@@ -65,7 +65,7 @@ i.css {
 							<%
 								long id = DataUtility.getLong(request.getParameter("id"));
 
-								if (dto.getId() != null && id > 0) {
+								if (dto.getId() != null ) {
 							%>
 							<h3 class="text-center default-text text-primary">Update
 								User</h3>
@@ -155,7 +155,7 @@ i.css {
 								<font color="red" class="pl-sm-5"> <%=ServletUtility.getErrorMessage("lastName", request)%></font></br>
 
 								<%
-									if (dto.getId() == null || id <= 0) {
+									if (dto.getId() == null || id<=0) {
 								%>
 
 								<span class="pl-sm-5"><b>Password</b> <span
@@ -218,9 +218,12 @@ i.css {
 													style="font-size: 1rem;"></i>
 											</div>
 										</div>
-										<input type="number" class="form-control" id="mobileNo" oninput="validateMaxLength(this)" required
+										<input type="number" class="form-control" id="mobileNo" oninput="numberLength(this)" 
 											 name="mobileNo" placeholder="mobile No"
-											value="<%=DataUtility.getStringData(dto.getMobileNo())%>">
+											value="<%=DataUtility.getStringData(dto.getMobileNo())%>"
+											
+											>
+											
 									</div>
 								</div>
 								<font color="red" class="pl-sm-5"> <%=ServletUtility.getErrorMessage("mobileNo", request)%></font></br>
@@ -272,15 +275,15 @@ i.css {
 												<i class="fa fa-calendar grey-text" style="font-size: 1rem;"></i>
 											</div>
 										</div>
-										<input type="text" id="datepicker2" name="dob" 
+										<input type="text" id="datepicker2" name="dob"
 											class="form-control" placeholder="Date Of Birth"
-											readonly="readonly" 
+											readonly="readonly"
 											value="<%=DataUtility.getDateString(dto.getDob())%>">
 									</div>
 								</div>
 								<font color="red" class="pl-sm-5"> <%=ServletUtility.getErrorMessage("dob", request)%></font></br>
 								<%
-									if (dto.getId() != null && id > 0) {
+									if (dto.getId() != null ) {
 								%>
 
 								<div class="text-center">

@@ -27,6 +27,7 @@ import in.co.rays.project_3.util.ServletUtility;
 
 @WebServlet(urlPatterns = { "/ctl/CollegeCtl" })
 public class CollegeCtl extends BaseCtl {
+	
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 	/** The log. */

@@ -6,18 +6,20 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <style type="text/css">
 .footer {
+    
 	position: fixed;
 	left: 0;
 	bottom: 0;
 	width: 100%;
 	color: white;
 	text-align: center;
-	background-color: gray;
+	/* background-color: #A6A6A6; */
+	background-image: linear-gradient(to bottom left, purple, gray, white);
 }
 </style>
 </head>
 <body>
-	<div class="footer ">
+	<div class="footer">
 		<center>
 			<font color="black">
 				<h5>&copy; RAYS Technologies</h5>

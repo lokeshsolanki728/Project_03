@@ -1,3 +1,4 @@
+
 package in.co.rays.project_3.controller;
 
 import java.io.IOException;
@@ -14,40 +15,34 @@ import in.co.rays.project_3.dto.BaseDTO;
 import in.co.rays.project_3.dto.SalaryDTO;
 import in.co.rays.project_3.exception.ApplicationException;
 import in.co.rays.project_3.model.ModelFactory;
-import in.co.rays.project_3.model.RoleModelInt;
 import in.co.rays.project_3.model.SalaryModelInt;
 import in.co.rays.project_3.util.DataUtility;
 import in.co.rays.project_3.util.PropertyReader;
 import in.co.rays.project_3.util.ServletUtility;
 
-@WebServlet(name = " SalaryListCtl", urlPatterns = { "/ctl/SalaryListCtl" })
+
+@WebServlet(name = "SalaryListCtl", urlPatterns = "/ctl/SalaryListCtl")
 public class SalaryListCtl extends BaseCtl {
-
 	protected void preload(HttpServletRequest request) {
-		RoleModelInt model = ModelFactory.getInstance().getRoleModel();
-		SalaryModelInt cmodel = ModelFactory.getInstance().getSalaryModel();
-		HashMap<String, String> map = new HashMap<String, String>();
-		map.put("Active", "Active");
-		map.put("Inactive", "Inactive");
-		request.setAttribute("map", map);
-		try {
-			List list = cmodel.list(0, 0);
-			request.setAttribute("nameList", list);
-		} catch (Exception e) {
-
-		}
+		HashMap map = new HashMap();
+		map.put("active", "active");
+		map.put("inactive", "inactive");
+		
+request.setAttribute("statusp", map);
 	}
+		
+	
 
 	@Override
 	protected BaseDTO populateDTO(HttpServletRequest request) {
 		SalaryDTO dto = new SalaryDTO();
 
+		 dto.setEmployee(DataUtility.getString(request.getParameter("employee")));
+		 dto.setAmount(DataUtility.getLong(request.getParameter("amount")));
+         dto.setStatus(DataUtility.getString(request.getParameter("status")));
+        
+         dto.setAppliedDate(DataUtility.getDate(request.getParameter("appliedDate")));
 
-		//dto.setId(DataUtility.getLong(request.getParameter("id")));
-		dto.setEmployee(DataUtility.getString(request.getParameter("employee")));
-		dto.setAppliedDate(DataUtility.getDate(request.getParameter("date")));
-		dto.setAmount(DataUtility.getLong(request.getParameter("amount")));
-		dto.setStatus(DataUtility.getString(request.getParameter("status")));
 		populateBean(dto, request);
 		return dto;
 	}
@@ -58,13 +53,13 @@ public class SalaryListCtl extends BaseCtl {
 		List next;
 		int pageNo = 1;
 		int pageSize = DataUtility.getInt(PropertyReader.getValue("page.size"));
-		SalaryDTO dto = new SalaryDTO();
+		SalaryDTO dto = (SalaryDTO) populateDTO(request);
 
 		SalaryModelInt model = ModelFactory.getInstance().getSalaryModel();
 		try {
 			list = model.search(dto, pageNo, pageSize);
 
-			ArrayList<SalaryDTO> a = (ArrayList<SalaryDTO>) list;
+			ArrayList a = (ArrayList<SalaryDTO>) list;
 
 			next = model.search(dto, pageNo + 1, pageSize);
 			ServletUtility.setList(list, request);
@@ -93,9 +88,6 @@ public class SalaryListCtl extends BaseCtl {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		String op = DataUtility.getString(request.getParameter("operation"));
-
 		List list = null;
 		List next = null;
 		int pageNo = DataUtility.getInt(request.getParameter("pageNo"));
@@ -104,6 +96,7 @@ public class SalaryListCtl extends BaseCtl {
 		pageNo = (pageNo == 0) ? 1 : pageNo;
 		pageSize = (pageSize == 0) ? DataUtility.getInt(PropertyReader.getValue("page.size")) : pageSize;
 		SalaryDTO dto = (SalaryDTO) populateDTO(request);
+		String op = DataUtility.getString(request.getParameter("operation"));
 
 		String[] ids = request.getParameterValues("ids");
 		SalaryModelInt model = ModelFactory.getInstance().getSalaryModel();
@@ -112,8 +105,8 @@ public class SalaryListCtl extends BaseCtl {
 			if (OP_SEARCH.equalsIgnoreCase(op) || "Next".equalsIgnoreCase(op) || "Previous".equalsIgnoreCase(op)) {
 
 				if (OP_SEARCH.equalsIgnoreCase(op)) {
-					pageNo = 1;
 
+					pageNo = 1;
 				} else if (OP_NEXT.equalsIgnoreCase(op)) {
 					pageNo++;
 				} else if (OP_PREVIOUS.equalsIgnoreCase(op) && pageNo > 1) {
@@ -146,7 +139,7 @@ public class SalaryListCtl extends BaseCtl {
 			}
 			dto = (SalaryDTO) populateDTO(request);
 			list = model.search(dto, pageNo, pageSize);
-
+		
 			ServletUtility.setDto(dto, request);
 			next = model.search(dto, pageNo + 1, pageSize);
 
@@ -172,6 +165,7 @@ public class SalaryListCtl extends BaseCtl {
 			ServletUtility.handleException(e, request, response);
 			return;
 		} catch (Exception e) {
+// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -180,5 +174,4 @@ public class SalaryListCtl extends BaseCtl {
 	protected String getView() {
 		return ORSView.SALARY_LIST_VIEW;
 	}
-
 }

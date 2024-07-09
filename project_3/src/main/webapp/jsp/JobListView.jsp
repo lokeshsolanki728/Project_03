@@ -1,12 +1,14 @@
 
 <%@page import="java.util.HashMap"%>
-<%@page import="in.co.rays.project_3.dto.JobRequirementDTO"%>
+<%@page import="in.co.rays.project_3.dto.JobDTO"%>
+<%@page import="in.co.rays.project_3.controller.JobListCtl"%>
+
 <%@page import="java.util.Iterator"%>
 <%@page import="java.util.List"%>
 <%@page import="in.co.rays.project_3.model.ModelFactory"%>
 <%@page import="in.co.rays.project_3.model.RoleModelInt"%>
 <%@page import="in.co.rays.project_3.util.DataUtility"%>
-<%@page import="in.co.rays.project_3.controller.JobListCtl"%>
+
 <%@page import="in.co.rays.project_3.util.HTMLUtility"%>
 <%@page import="in.co.rays.project_3.util.ServletUtility"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -22,7 +24,7 @@
 	src="<%=ORSView.APP_CONTEXT%>/js/CheckBox11.js"></script>
 <style>
 .hm {
-	background-image: url('<%=ORSView.APP_CONTEXT%>/img/rain.jpg');
+	background-image: url('<%=ORSView.APP_CONTEXT%>/img/1234.jpeg');
 	background-size: cover;
 	background-repeat: no-repeate;
 	padding-top: 6%;
@@ -45,11 +47,12 @@
 	<%@include file="calendar.jsp"%>
 	<div></div>
 	<div>
-		<form class="pb-5" action="<%=ORSView.JOB_LIST_CTL%>" method="post">
-			<jsp:useBean id="dto" class="in.co.rays.project_3.dto.JobRequirementDTO"
+		<form class="pb-5" action="<%=ORSView.JOB_LIST_CTL%>"
+			method="post">
+			<jsp:useBean id="dto" class="in.co.rays.project_3.dto.JobDTO"
 				scope="request"></jsp:useBean>
 			<%
-				List list1 = (List) request.getAttribute("nameList");
+			HashMap map = (HashMap) request.getAttribute("statusp");
 			%>
 
 
@@ -63,12 +66,12 @@
 
 				List list = ServletUtility.getList(request);
 
-				Iterator<JobRequirementDTO> it = list.iterator();
+				Iterator<JobDTO> it = list.iterator();
 				if (list.size() != 0) {
 			%>
 			<center>
-				<h1 class="text-primary font-weight-bold pt-3">
-					<u>Job Requirement List</u>
+				<h1 class="text-secondary font-weight-bold pt-3">
+					Job List
 				</h1>
 			</center>
 			<div class="row">
@@ -110,34 +113,32 @@
 			<div class="row">
 
 
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				
+				<!-- <div class="col-sm-2"></div> -->
 				<div class="col-sm-2">
-					<input type="text" name="title" placeholder="Enter Title"
+					<input type="text" name="title" placeholder="Enter title"
 						class="form-control"
 						value="<%=ServletUtility.getParameter("title", request)%>">
 				</div>
+
+				
 				<div class="col-sm-2">
-					<input type="text" name="jobd" placeholder="Enter JobDiscription"
+					<input type="text" name="experience" placeholder="Enter experience"
 						class="form-control"
-						value="<%=ServletUtility.getParameter("jobd", request)%>">
+						value="<%=ServletUtility.getParameter("experience", request)%>">
 				</div>
 
+
 			
-				 <div class="col-sm-2">
-					<input type="text" name="date" placeholder="Enter open date"
-						class="form-control"
-						value="<%=ServletUtility.getParameter("date", request)%>">
-				</div> 
-			 
-			
-				
-				<div class="col-sm-2"><%=HTMLUtility.getList("client", String.valueOf(dto.getClient()), list1)%></div>
-				&emsp;
-				 
-				
-										
 				<div class="col-sm-2">
+					<input type="text" name="dateOfOpning" placeholder="Enter DateOfOpning"
+						class="form-control"
+						value="<%=ServletUtility.getParameter("dateOfOpning", request)%>">
+				</div>
+
+				
+<div class="col-sm-2"><%=HTMLUtility.getList("status", String.valueOf(dto.getStatus()), map)%></div>
+
+				 
 					<input type="submit" class="btn btn-primary btn-md"
 						style="font-size: 15px" name="operation"
 						value="<%=JobListCtl.OP_SEARCH%>"> &emsp; <input
@@ -151,38 +152,41 @@
 
 			</br>
 			<div style="margin-bottom: 20px;" class="table-responsive">
-				<table class="table table-bordered table-dark table-hover">
+				<table class="table table-bJobed table-dark table-hover">
 					<thead>
-						<tr style="background-color: blue;">
+						<tr style="background-color: purple;">
 
 							<th width="10%"><input type="checkbox" id="select_all"
 								name="Select" class="text"> Select All</th>
 							<th width="5%" class="text">S.NO</th>
 							<th width="15%" class="text">Title</th>
-							<th width="15%" class="text">Client</th>
-							<th width="15%" class="text">Open Date</th>
-							<th width="20%" class="text">Job Discription</th>
-							<th width="5%" class="text">Edit</th>
+							<th width="15%" class="text">Experience</th>
+							
+							<th width="15%" class="text">Status</th>
+							<th width="15%" class="text">DateOfOpening</th>
+							<!-- <th width="15%" class="text">ROLE</th> -->
+							<th width="10%" class="text">Edit</th>
 						</tr>
 					</thead>
 					<%
 						while (it.hasNext()) {
-								dto = it.next();
+								dto = (JobDTO) it.next();
 
-							/* 	RoleDTO rbean = rmodel.findByPK(dto.getRoleId()); */
+								
 					%>
 					<tbody>
 						<tr>
 							<td align="center"><input type="checkbox" class="checkbox"
-								name="ids" value="<%=dto.getId()%>"
-								></td>
+								name="ids" value="<%=dto.getId()%>"></td>
 							<td class="text"><%=index++%></td>
 							<td class="text"><%=dto.getTitle()%></td>
-							<td class="text"><%=dto.getClient()%></td>
+
+							<td class="text"><%=dto.getExperience()%></td>
+							<td class="text"><%=dto.getStatus()%></td>
 							
+							<td class="text"><%=DataUtility.getDateString(dto.getDateOfOpning())%></td>
 							<%-- <td class="text"><%=rbean.getName()%></td> --%>
-							<td class="text"><%=DataUtility.getDateString(dto.getOpenDate())%></td>
-							<td class="text"><%=dto.getJobDiscription()%></td>
+
 							<td class="text"><a href="JobCtl?id=<%=dto.getId()%>">Edit</a></td>
 						</tr>
 					</tbody>
@@ -219,7 +223,7 @@
 				if (list.size() == 0) {
 			%>
 			<center>
-				<h1 style="font-size: 40px; color: #162390;">Job Requirement List</h1>
+				<h1 style="font-size: 40px; color: #162390;">Job List</h1>
 			</center>
 			</br>
 			<div class="row">
@@ -253,7 +257,6 @@
 					</h4>
 				</div>
 				<%
-				
 					}
 				%>
 				<div style="padding-left: 48%;">

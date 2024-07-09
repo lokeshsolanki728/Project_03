@@ -116,6 +116,7 @@ public abstract class BaseCtl extends HttpServlet{
     @Override
     protected void service(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
+    	System.out.println("service method chaliii....");
 
         // Load the preloaded data required to display at HTML form
         preload(request);
@@ -129,9 +130,12 @@ public abstract class BaseCtl extends HttpServlet{
 				&& !OP_DELETE.equalsIgnoreCase(op)&& !OP_RESET.equalsIgnoreCase(op)) {
             // Check validation, If fail then send back to page with error
             // messages
+        	System.out.println(op);
 
             if (!validate(request)) {
+            	  System.out.println("rahul");
                 BaseDTO dto = (BaseDTO) populateDTO(request);
+              
                 ServletUtility.setDto(dto, request);
                 ServletUtility.forward(getView(), request, response);
                 return;

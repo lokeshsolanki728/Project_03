@@ -1,5 +1,8 @@
+
 <%@page import="java.util.List"%>
 <%@page import="in.co.rays.project_3.controller.JobCtl"%>
+
+
 <%@page import="java.util.HashMap"%>
 <%@page import="in.co.rays.project_3.util.HTMLUtility"%>
 <%@page import="in.co.rays.project_3.util.DataUtility"%>
@@ -11,26 +14,26 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Job Discription view</title>
+<title>Job view</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style type="text/css">
 i.css {
-	border: 2px solid #8080803b;
+	bJob: 2px solid #8080803b;
 	padding-left: 10px;
 	padding-bottom: 11px;
 	background-color: #ebebe0;
 }
 
 .input-group-addon {
-	/* box-shadow: 9px 8px 7px #001a33; */
-	background-image: linear-gradient(to bottom right, orange, black);
+	box-shadow: 9px 8px 7px #001a33;
+	background-image: linear-gradient(to bottom right, white,pink);
 	background-repeat: no repeat;
 	background-size: 100%;
 	padding-bottom: 11px;
 }
 
 .hm {
-	background-image: url('<%=ORSView.APP_CONTEXT%>/img/unsplash.jpg');
+	background-image: url('<%=ORSView.APP_CONTEXT%>/img/download (3).jpeg');
 	background-size: cover;
 	padding-top: 6%;
 }
@@ -46,7 +49,7 @@ i.css {
 
 		<main>
 		<form action="<%=ORSView.JOB_CTL%>" method="post">
-			<jsp:useBean id="dto" class="in.co.rays.project_3.dto.JobRequirementDTO"
+			<jsp:useBean id="dto" class="in.co.rays.project_3.dto.JobDTO"
 				scope="request"></jsp:useBean>
 			<div class="row pt-3">
 				<!-- Grid column -->
@@ -61,19 +64,19 @@ i.css {
 								if (dto.getId() != null && id > 0) {
 							%>
 							<h3 class="text-center default-text text-primary">Update
-								Bank</h3>
+								Job</h3>
 							<%
 								} else {
 							%>
-							<h3 class="text-center default-text text-primary">Add Bank</h3>
+							<h3 class="text-center default-text text-primary">Add
+								Job</h3>
 							<%
 								}
 							%>
 							<!--Body-->
 							<div>
 								<%
-									List list = (List) request.getAttribute("roleList");
-							    	List list1 = (List) request.getAttribute("list1");
+								HashMap map = (HashMap) request.getAttribute("statusp");
 								%>
 
 								<H4 align="center">
@@ -119,63 +122,50 @@ i.css {
 											</div>
 										</div>
 										<input type="text" class="form-control" name="title"
-											placeholder="Enter Title"
+											placeholder="Enter title"
+											onkeydown="return /[a-zA-Z]/i.test(event.key)" maxlength="30"
 											value="<%=DataUtility.getStringData(dto.getTitle())%>">
 									</div>
 								</div>
 								<font color="red" class="pl-sm-5"> <%=ServletUtility.getErrorMessage("title", request)%></font></br>
 
-								<span class="pl-sm-5"><b>Client</b><span
-									style="color: red;">*</span></span> </br>
-
-								<div class="col-sm-12">
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<div class="input-group-text">
-												<i class="fa fa-venus-mars grey-text"
-													style="font-size: 1rem;"></i>
-											</div>
-										</div>
-
-										<%
-											HashMap map = new HashMap();
-											map.put("Lokesh", "Lokesh");
-											map.put("Nikhil", "Nikhil");
-											map.put("Deepak", "Deepak");
-											map.put("Amit", "Amit");
-											map.put("Amit", "Amit");
-											
-
-											String htmlList = HTMLUtility.getList("client", dto.getClient(), map);
-										%>
-										<%=htmlList%></div>
-
-								</div>
-								<font color="red" class="pl-sm-5"> <%=ServletUtility.getErrorMessage("gender", request)%></font></br>
-
-
-								
-								<span class="pl-sm-5"><b>Job Discription</b> <span
+								<span class="pl-sm-5"><b>Experience</b> <span
 									style="color: red;">*</span></span></br>
 								<div class="col-sm-12">
 									<div class="input-group">
 										<div class="input-group-prepend">
 											<div class="input-group-text">
-												<i class="fa fa-list grey-text"
+												<i class="fa fa-user-circle grey-text"
 													style="font-size: 1rem;"></i>
 											</div>
 										</div>
-										<textarea class="form-control" name="jobd" rows="3" cols="3"
-											placeholder="Enter job Discription">
-											<%=DataUtility.getStringData(dto.getJobDiscription())%></textarea>
+										<input type="text" class="form-control" name="experience"
+											placeholder="Experience"
+											value="<%=DataUtility.getStringData(dto.getExperience())%>">
 									</div>
 								</div>
-								<font color="red" class="pl-sm-5"> <%=ServletUtility.getErrorMessage("jobd", request)%></font></br>
-
-
+								<font color="red" class="pl-sm-5"> <%=ServletUtility.getErrorMessage("experience", request)%></font></br>
 								
+ 
+ 
+ 	
+								<span class="pl-sm-5"><b>Status</b><span
+									style="color: red;">*</span></span></br>
+								<div class="col-sm-12">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<div class="input-group-text">
+												<i class="fa fa-user grey-text" style="font-size: 1rem;"></i>
+											</div>
+										</div>
+										<%=HTMLUtility.getList("status", String.valueOf(dto.getStatus()), map)%>
+									</div>
+								</div>
+									<font color="red" class="pl-sm-5"> <%=ServletUtility.getErrorMessage("status", request)%></font></br>
 
-								<span class="pl-sm-5"><b>Open Date</b> <span
+ 
+
+								<span class="pl-sm-5"><b>DateOfJoining</b> <span
 									style="color: red;">*</span></span></br>
 								<div class="col-sm-12">
 									<div class="input-group">
@@ -184,13 +174,13 @@ i.css {
 												<i class="fa fa-calendar grey-text" style="font-size: 1rem;"></i>
 											</div>
 										</div>
-										<input type="text" name="date" id="datepicker2"
-											class="form-control" placeholder=" Open Date"
-											
-											value="<%=DataUtility.getDateString(dto.getOpenDate())%>">
+										<input type="text" id="datepicker2" name="dateOfJoining"
+											class="form-control" placeholder=" Enter DateOfJoining "
+											readonly="readonly"
+											value="<%=DataUtility.getDateString(dto.getDateOfOpning())%>">
 									</div>
 								</div>
-								<font color="red" class="pl-sm-5"> <%=ServletUtility.getErrorMessage("date", request)%></font></br>
+								<font color="red" class="pl-sm-5"> <%=ServletUtility.getErrorMessage("dateOfJoining", request)%></font></br>
 								<%
 									if (dto.getId() != null && id > 0) {
 								%>
@@ -199,8 +189,8 @@ i.css {
 
 									<input type="submit" name="operation"
 										class="btn btn-success btn-md" style="font-size: 17px"
-										value="<%=JobCtl.OP_UPDATE%>"> <input type="submit"
-										name="operation" class="btn btn-warning btn-md"
+										value="<%=JobCtl.OP_UPDATE%>"> <input
+										type="submit" name="operation" class="btn btn-warning btn-md"
 										style="font-size: 17px" value="<%=JobCtl.OP_CANCEL%>">
 
 								</div>

@@ -9,14 +9,13 @@ services:
     ports:
       - "3308:3306"
     networks:
-      - mynetwork 
+      - mynetwork
     volumes:
       - ./mysql-data:/var/lib/mysql
 
   webapp:
     build:
       context: .
-      dockerfile: Dockerfile
     container_name: project_3-webapp
     ports:
       - "8080:8080"
@@ -30,4 +29,3 @@ services:
 networks:
   mynetwork:
     driver: bridge
-

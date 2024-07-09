@@ -24,12 +24,12 @@ import in.co.rays.project_3.util.ServletUtility;
 
 /**
  * user functionality controller.to perform add,delete and update operation
+ * 
  * @author Lokesh Solanki
  *
  */
 @WebServlet(urlPatterns = { "/ctl/UserCtl" })
 public class UserCtl extends BaseCtl {
-	
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
@@ -47,28 +47,24 @@ public class UserCtl extends BaseCtl {
 		}
 
 	}
-					
+
 	protected boolean validate(HttpServletRequest request) {
 		boolean pass = true;
 		System.out.println("-------------validate started-------------");
-		
+
 		if (DataValidator.isNull(request.getParameter("firstName"))) {
 			request.setAttribute("firstName", PropertyReader.getValue("error.require", "first Name"));
-			System.out.println(pass);
 			pass = false;
 		} else if (!DataValidator.isName(request.getParameter("firstName"))) {
 			request.setAttribute("firstName", "first name must contains alphabets only");
-			System.out.println(pass);
 			pass = false;
 
 		}
 		if (DataValidator.isNull(request.getParameter("lastName"))) {
 			request.setAttribute("lastName", PropertyReader.getValue("error.require", "last Name"));
-			System.out.println(pass);
 			pass = false;
 		} else if (!DataValidator.isName(request.getParameter("lastName"))) {
 			request.setAttribute("lastName", "last name must contains alphabets only");
-			System.out.println(pass);
 			pass = false;
 
 		}
@@ -76,30 +72,26 @@ public class UserCtl extends BaseCtl {
 
 			if (DataValidator.isNull(request.getParameter("password"))) {
 				request.setAttribute("password", PropertyReader.getValue("error.require", "Password"));
-				System.out.println(pass);
 				pass = false;
 			} else if (!DataValidator.isPassword(request.getParameter("password"))) {
 				request.setAttribute("password", PropertyReader.getValue("Enter the valid Password"));
-				System.out.println(pass);
 				pass = false;
 			}
 
 			if (DataValidator.isNull(request.getParameter("confirmPassword"))) {
 				request.setAttribute("confirmPassword", PropertyReader.getValue("error.require", "Confirm Password"));
-				System.out.println(pass);
 				pass = false;
-			} 
-				  else if (!DataValidator.isPassword(request.getParameter("confirmPassword"))){
-					  request.setAttribute("confirmPassword",PropertyReader.getValue("Enter the valid confirmPassword")); 
-					  pass = false; 
-					  }
-				 
+			} else if (!DataValidator.isPassword(request.getParameter("confirmPassword"))) {
+				request.setAttribute("confirmPassword", PropertyReader.getValue("Enter the valid confirmPassword"));
+				pass = false;
+			}
 
 			else if (!request.getParameter("password").equals(request.getParameter("confirmPassword"))) {
 				request.setAttribute("confirmPassword", "Confirm Password should  be matched.");
 				pass = false;
 			}
-		}if (DataValidator.isNull(request.getParameter("role"))) {
+		}
+		if (DataValidator.isNull(request.getParameter("role"))) {
 			request.setAttribute("role", PropertyReader.getValue("error.require", "role"));
 			pass = false;
 		}
@@ -111,7 +103,7 @@ public class UserCtl extends BaseCtl {
 			request.setAttribute("mobileNo", PropertyReader.getValue("error.require", "mobile No"));
 			pass = false;
 		} else if (!DataValidator.isPhoneNo(request.getParameter("mobileNo"))) {
-			request.setAttribute("mobileNo", "Please Enter Valid Mobile Number");
+			request.setAttribute("mobileNo", "Please Enter Valid 10 digit  Mobile Number");
 			pass = false;
 		}
 
@@ -122,32 +114,30 @@ public class UserCtl extends BaseCtl {
 			request.setAttribute("emailId", PropertyReader.getValue("error.email", "Email Id "));
 			pass = false;
 		}
-		
+
 		if (DataValidator.isNull(request.getParameter("dob"))) {
 			request.setAttribute("dob", PropertyReader.getValue("error.require", "dob"));
 			pass = false;
-		}else if (!DataValidator.isDate(request.getParameter("dob"))) {
+		} else if (!DataValidator.isDate(request.getParameter("dob"))) {
 			request.setAttribute("dob", PropertyReader.getValue("error.date", "Date Of Birth"));
 			pass = false;
-		}else if (!DataValidator.isValidAge(request.getParameter("dob"))) {
-			
+		} else if (!DataValidator.isValidAge(request.getParameter("dob"))) {
+
 			request.setAttribute("dob", "Age Must be greater then 18 year");
 			pass = false;
 		}
-		
+
 		System.out.println(request.getParameter("dob"));
 		System.out.println("validate end ");
-		System.out.println(pass);
 		return pass;
 
 	}
 
 	protected BaseDTO populateDTO(HttpServletRequest request) {
 		UserDTO dto = new UserDTO();
-		
-         
-         System.out.println(request.getParameter("dob"));      
-   
+
+		System.out.println(request.getParameter("dob"));
+
 		dto.setId(DataUtility.getLong(request.getParameter("id")));
 
 		dto.setRoleId(DataUtility.getLong(request.getParameter("role")));
@@ -164,26 +154,23 @@ public class UserCtl extends BaseCtl {
 
 		dto.setGender(DataUtility.getString(request.getParameter("gender")));
 		dto.setMobileNo(DataUtility.getString(request.getParameter("mobileNo")));
-        
-		populateBean(dto,request);
-		
-		 System.out.println(request.getParameter("dob")+"......."+dto.getDob());
+
+		populateBean(dto, request);
+
+		System.out.println(request.getParameter("dob") + "......." + dto.getDob());
 		log.debug("UserRegistrationCtl Method populatedto Ended");
 
 		return dto;
 
 	}
+
 	/**
 	 * Contain Display Logics.
 	 *
-	 * @param request
-	 *            the request
-	 * @param response
-	 *            the response
-	 * @throws ServletException
-	 *             the servlet exception
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 * @param request  the request
+	 * @param response the response
+	 * @throws ServletException the servlet exception
+	 * @throws IOException      Signals that an I/O exception has occurred.
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
@@ -207,37 +194,38 @@ public class UserCtl extends BaseCtl {
 		}
 		ServletUtility.forward(getView(), request, response);
 	}
+
 	/**
 	 * Contain Submit Logics.
 	 *
-	 * @param request
-	 *            the request
-	 * @param response
-	 *            the response
-	 * @throws ServletException
-	 *             the servlet exception
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 * @param request  the request
+	 * @param response the response
+	 * @throws ServletException the servlet exception
+	 * @throws IOException      Signals that an I/O exception has occurred.
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
 		String op = DataUtility.getString(request.getParameter("operation"));
-		System.out.println("-------------------------------------------------------------------------dopost run-------");
+		System.err.println("-------------------------------------------------------------------------dopost run-------");
 		// get model
 		UserModelInt model = ModelFactory.getInstance().getUserModel();
 		long id = DataUtility.getLong(request.getParameter("id"));
-		if (OP_SAVE.equalsIgnoreCase(op)||OP_UPDATE.equalsIgnoreCase(op)) {
+		if (OP_SAVE.equalsIgnoreCase(op) || OP_UPDATE.equalsIgnoreCase(op)) {
 			UserDTO dto = (UserDTO) populateDTO(request);
-              System.out.println(" in do post method jkjjkjk++++++++"+dto.getId());
+			System.out.println(" in do post method jkjjkjk++++++++" + dto.getId());
 			try {
 				if (id > 0) {
 					model.update(dto);
-					
+					// mail sending in updating the goto user and forword update methode
+					//model.UpdateRegisterUser(dto);
 					ServletUtility.setSuccessMessage("Data is successfully Update", request);
+
 				} else {
-					
+
 					try {
-						 model.add(dto);
-						 ServletUtility.setDto(dto, request);
+
+						model.add(dto);
+						ServletUtility.setDto(dto, request);
 						ServletUtility.setSuccessMessage("Data is successfully saved", request);
 					} catch (ApplicationException e) {
 						log.error(e);
@@ -250,8 +238,7 @@ public class UserCtl extends BaseCtl {
 
 				}
 				ServletUtility.setDto(dto, request);
-				
-				
+
 			} catch (ApplicationException e) {
 				log.error(e);
 				ServletUtility.handleException(e, request, response);
@@ -294,4 +281,3 @@ public class UserCtl extends BaseCtl {
 	}
 
 }
-

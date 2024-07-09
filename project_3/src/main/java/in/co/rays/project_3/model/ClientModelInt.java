@@ -1,3 +1,4 @@
+
 package in.co.rays.project_3.model;
 
 import java.util.List;
@@ -7,6 +8,7 @@ import in.co.rays.project_3.exception.ApplicationException;
 import in.co.rays.project_3.exception.DuplicateRecordException;
 
 public interface ClientModelInt {
+	
 	public long add(ClientDTO dto)throws ApplicationException,DuplicateRecordException;
 	public void delete(ClientDTO dto)throws ApplicationException;
 	public void update(ClientDTO dto)throws ApplicationException,DuplicateRecordException;
@@ -16,6 +18,9 @@ public interface ClientModelInt {
 	public List list(int pageNo,int pageSize)throws ApplicationException;
 	public List search(ClientDTO dto,int pageNo,int pageSize)throws ApplicationException;
 	public List search(ClientDTO dto)throws ApplicationException;
+	public List getRoles(ClientDTO dto)throws ApplicationException;
 	
+
+
+
 }
-	

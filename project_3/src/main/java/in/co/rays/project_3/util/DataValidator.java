@@ -1,5 +1,6 @@
 package in.co.rays.project_3.util;
 
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.Date;
 
@@ -10,6 +11,63 @@ import java.util.Date;
  *
  */
 public class DataValidator {
+	
+	
+	   
+       
+       
+	 public static boolean isNumerics(String str) {
+	        for (char c : str.toCharArray()) {
+	            if (!Character.isDigit(c)) {
+	                return false;
+	            }
+	        }
+	        return true;
+	    }
+
+	 public static boolean isMobileNo(String val){
+	    	
+	    	String mobreg = "^[6-9][0-9]{9}$";
+	    	
+	    			if (isNotNull(val) && val.matches(mobreg)) {
+						
+							return true;
+	    				}else{
+	    					
+	    					return false;
+						}	
+	    		}
+	
+	
+	public static boolean isNamemaxlegntten(String name) {
+
+		String namereg ="^.{0,30}$";
+
+		// String sname = name.trim();
+
+		if (isNotNull(name) && name.matches(namereg)) {
+
+			return true;
+		} else {
+			return false;
+		}
+	}
+	public static boolean isNamemaxlegntfifty(String name) {
+
+		String namereg ="^.{0,200}$";
+
+		// String sname = name.trim();
+
+		if (isNotNull(name) && name.matches(namereg)) {
+
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	
+
 
 	public static boolean isName(String name) {
 
@@ -219,7 +277,7 @@ public class DataValidator {
 	public static boolean isPhoneNo(String val) {
 
 		String phonereg = "^[6-9][0-9]{9}$";
-//			String phonereg = "^[6-9]{10}$";
+		//String phonereg1 = "^[6-9]{10}$";
 
 		if (isNotNull(val)) {
 			try {
@@ -232,23 +290,6 @@ public class DataValidator {
 			return false;
 		}
 	}
-	public static boolean isAccountNo(String val) {
-
-		String phonereg = "^\\d{6,12}$";
-//			String phonereg = "^[6-9]{10}$";
-
-		if (isNotNull(val)) {
-			try {
-				return val.matches(phonereg);
-			} catch (NumberFormatException e) {
-				return false;
-			}
-
-		} else {
-			return false;
-		}
-	}
-
 
 	/**
 	 * Checks if value of Mobile No is 10

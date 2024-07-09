@@ -28,5 +28,6 @@ public boolean forgetPassword(String login)throws ApplicationException, RecordNo
 public boolean resetPassword(UserDTO dto)throws ApplicationException,RecordNotFoundException;
 public long registerUser(UserDTO dto)throws ApplicationException,DuplicateRecordException;
 public List getRoles(UserDTO dto)throws ApplicationException;
+public void UpdateRegisterUser(UserDTO dto)throws ApplicationException,DuplicateRecordException;
 
 }

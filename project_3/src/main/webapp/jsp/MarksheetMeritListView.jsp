@@ -110,7 +110,7 @@
 				</a>
 			</div>
 			<div style="margin-bottom: 20px;" class="table-responsive">
-<b>
+            <b>
 				<table class="table table-responsive">
 					<table class="table table-info" style="background-image: url('<%=ORSView.APP_CONTEXT%>/img/avatar-g92feff2a2_1920.webp');">
 						<thead>

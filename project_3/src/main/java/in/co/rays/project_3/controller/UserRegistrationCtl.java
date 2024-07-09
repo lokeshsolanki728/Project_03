@@ -46,7 +46,7 @@ public class UserRegistrationCtl extends BaseCtl {
 		if (DataValidator.isNull(request.getParameter("lastName"))) {
 			request.setAttribute("lastName", PropertyReader.getValue("error.require", "last Name"));
 			pass = false;
-		} else if (!DataValidator.isName(request.getParameter("firstName"))) {
+		} else if (!DataValidator.isName(request.getParameter("lastName"))) {
 			request.setAttribute("lastName", "last name must contains alphabets only");
 			pass = false;
 

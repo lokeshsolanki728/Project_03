@@ -63,7 +63,7 @@ i.css {
 							<%
 								long id = DataUtility.getLong(request.getParameter("id"));
 
-								if (dto.getId()!=null&&id>0) {
+								if (dto.getId() == null && id>0) {
 							%>
 							<h3 class="text-center default-text text-primary">Update
 								Marksheet</h3>
@@ -158,13 +158,12 @@ i.css {
 									<div class="input-group">
 										<div class="input-group-prepend">
 											<div class="input-group-text">
-												<i class="fa fa-envelope grey-text"></i>
+												<i class="fa fa-magnet grey-text"></i>
 											</div>
 										</div>
-										<input type="text" class="form-control" name="physics"
+										<input type="number" class="form-control" name="physics"
 											id="defaultForm-email" placeholder="Enter Physics"
-											value="<%=DataUtility.getStringData(dto.getPhysics()).equals("0") ? ""
-					: DataUtility.getStringData(dto.getPhysics())%>">
+											value="<%=DataUtility.getStringData(dto.getPhysics()).equals("0") ? "": DataUtility.getStringData(dto.getPhysics())%>">
 									</div>
 								</div>
 								<font color="red" class="pl-sm-5"> <%=ServletUtility.getErrorMessage("physics", request)%></font></br>
@@ -176,10 +175,10 @@ i.css {
 									<div class="input-group">
 										<div class="input-group-prepend">
 											<div class="input-group-text">
-												<i class="fa fa-envelope grey-text"></i>
+												<i class="fa fa-atom grey-text"></i>
 											</div>
 										</div>
-										<input type="text" class="form-control" name="chemistry"
+										<input type="number" class="form-control" name="chemistry"
 											id="defaultForm-email" placeholder="Enter chemistry"
 											value="<%=DataUtility.getStringData(dto.getChemistry()).equals("0") ? ""
 					: DataUtility.getStringData(dto.getChemistry())%>">
@@ -196,7 +195,7 @@ i.css {
 												<i class="fa fa-equals grey-text"></i>
 											</div>
 										</div>
-										<input type="text" name="maths" class="form-control"
+										<input type="number" name="maths" class="form-control"
 											placeholder="Enter Maths"
 											value="<%=DataUtility.getStringData(dto.getMaths()).equals("0") ? ""
 					: DataUtility.getStringData(dto.getMaths())%>">
@@ -208,7 +207,7 @@ i.css {
 							</div>
 							</br>
 							<%
-								if (dto.getId()!=null&&id > 0) {
+								if (dto.getId() == null && id>0) {
 							%>
 
 							<div class="text-center">

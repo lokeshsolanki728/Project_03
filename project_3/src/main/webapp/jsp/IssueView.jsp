@@ -1,5 +1,8 @@
+
 <%@page import="java.util.List"%>
 <%@page import="in.co.rays.project_3.controller.IssueCtl"%>
+
+
 <%@page import="java.util.HashMap"%>
 <%@page import="in.co.rays.project_3.util.HTMLUtility"%>
 <%@page import="in.co.rays.project_3.util.DataUtility"%>
@@ -13,26 +16,24 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Issue view</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
-<script src="<%=ORSView.APP_CONTEXT%>/js/ValidateToInput.js"></script>
 <style type="text/css">
 i.css {
-	border: 2px solid #8080803b;
+	bIssue: 2px solid #8080803b;
 	padding-left: 10px;
 	padding-bottom: 11px;
 	background-color: #ebebe0;
 }
 
 .input-group-addon {
-	/* box-shadow: 9px 8px 7px #001a33; */
-	background-image: linear-gradient(to bottom right, orange, black);
+	box-shadow: 9px 8px 7px #001a33;
+	background-image: linear-gradient(to bottom right, white, pink);
 	background-repeat: no repeat;
 	background-size: 100%;
 	padding-bottom: 11px;
 }
 
 .hm {
-	background-image: url('<%=ORSView.APP_CONTEXT%>/img/unsplash.jpg');
+	background-image: url('<%=ORSView.APP_CONTEXT%>/img/download (3).jpeg');
 	background-size: cover;
 	padding-top: 6%;
 }
@@ -71,12 +72,17 @@ i.css {
 							<%
 								}
 							%>
-							<!--Body-->
+							
 							<div>
-								<%
-									List list = (List) request.getAttribute("roleList");
-									List list1 = (List) request.getAttribute("list1");
+							
+							<%
+									HashMap map  = (HashMap) request.getAttribute("assign");
 								%>
+							<%
+									HashMap map1  = (HashMap) request.getAttribute("statusp");
+								%>
+							
+								
 
 								<H4 align="center">
 									<%
@@ -111,22 +117,6 @@ i.css {
 
 							<div class="md-form">
 
-								<span class="pl-sm-5"><b>Open Date</b> <span
-									style="color: red;">*</span></span></br>
-								<div class="col-sm-12">
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<div class="input-group-text">
-												<i class="fa fa-calendar grey-text" style="font-size: 1rem;"></i>
-											</div>
-										</div>
-										<input type="text" name="openDate" id="datepicker2"
-											class="form-control" placeholder=" Open Date" 
-											value="<%=DataUtility.getDateString(dto.getOpenDate())%>">
-									</div>
-								</div>
-								<font color="red" class="pl-sm-5"> <%=ServletUtility.getErrorMessage("openDate", request)%></font></br>
-
 								<span class="pl-sm-5"><b> Title</b> <span
 									style="color: red;">*</span></span> </br>
 								<div class="col-sm-12">
@@ -136,56 +126,64 @@ i.css {
 												<i class="fa fa-user-alt grey-text" style="font-size: 1rem;"></i>
 											</div>
 										</div>
-										<input type="text" class="form-control" name="title" onkeypress="return validateInput(event)"
-											placeholder="Enter Title"
+										<input type="text" class="form-control" name="title"
+											placeholder="Enter  Title"
+											onkeydown="return /[a-zA-Z]/i.test(event.key)" maxlength="30"
 											value="<%=DataUtility.getStringData(dto.getTitle())%>">
 									</div>
 								</div>
 								<font color="red" class="pl-sm-5"> <%=ServletUtility.getErrorMessage("title", request)%></font></br>
 
 
-								<span class="pl-sm-5"><b> Description</b> <span
+
+
+								<span class="pl-sm-5"><b>Description</b> <span
 									style="color: red;">*</span></span></br>
 								<div class="col-sm-12">
 									<div class="input-group">
 										<div class="input-group-prepend">
 											<div class="input-group-text">
-												<i class="fa fa-list grey-text" style="font-size: 1rem;"></i>
+												<i class="fa fa-user-circle grey-text"
+													style="font-size: 1rem;"></i>
 											</div>
 										</div>
-										<textarea class="form-control" name="description" rows="3"
-											cols="3" placeholder="Enter job Discription">
-											<%=DataUtility.getStringData(dto.getDescription())%></textarea>
+										<textarea name="description" class="form-control" maxlength="200"
+											placeholder="Enter description" rows="2" cols="2"><%=DataUtility.getStringData(dto.getDescription())%></textarea>
 									</div>
 								</div>
 								<font color="red" class="pl-sm-5"> <%=ServletUtility.getErrorMessage("description", request)%></font></br>
 
-     
-                                   
-                                   <span class="pl-sm-5"><b> AssignTo</b> <span
-									style="color: red;">*</span></span></br>
+
+
+
+
+
+								<span class="pl-sm-5"><b>AssignTo</b><span
+									style="color: red;">*</span></span> </br>
 								<div class="col-sm-12">
 									<div class="input-group">
 										<div class="input-group-prepend">
 											<div class="input-group-text">
-												<i class="fa fa-list grey-text" style="font-size: 1rem;"></i>
+												<i class="fa fa-copy grey-text"
+													style="font-size: 1rem;"></i>
 											</div>
 										</div>
-									<input type="text" class="form-control" name="assignTo" rows="3" onkeypress="return validateInput(event)"
-											cols="3" placeholder="Enter assignTo" 
-											value="<%=DataUtility.getStringData(dto.getAssignTo())%>">
-									</div>
+
+
+										<%
+											
+											String htmlList = HTMLUtility.getList("assignTo", dto.getAssignTo(), map);
+											
+										%>
+										<%=htmlList%></div>
+
 								</div>
-								<font color="red" class="pl-sm-5"> <%=ServletUtility.getErrorMessage("assignTo", request)%></font></br>
+									<font color="red" class="pl-sm-5"> <%=ServletUtility.getErrorMessage("assignTo", request)%></font></br>
+								
 
-
-                                   
-                                   
-                                   
 
 								<span class="pl-sm-5"><b>Status</b><span
 									style="color: red;">*</span></span> </br>
-
 								<div class="col-sm-12">
 									<div class="input-group">
 										<div class="input-group-prepend">
@@ -195,22 +193,37 @@ i.css {
 											</div>
 										</div>
 
-										<%
-											HashMap map = new HashMap();
-											map.put("open", "open");
-											map.put("in progress", "in progress");
-											map.put("Hold", "Hold");
-											map.put("Resolved", "Resolved");
-											map.put("Close", "Close");
 
-											String htmlList = HTMLUtility.getList("status", dto.getStatus(), map);
+										<%
+											
+											String htmlList1 = HTMLUtility.getList("status", dto.getStatus(), map1);
 										%>
-										<%=htmlList%></div>
+										<%=htmlList1%></div>
 
 								</div>
-								<font color="red" class="pl-sm-5"> <%=ServletUtility.getErrorMessage("status", request)%></font></br>
+							
+	<font color="red" class="pl-sm-5"> <%=ServletUtility.getErrorMessage("status", request)%></font></br>
 
 
+
+
+
+								<span class="pl-sm-5"><b>OpenDate</b> <span
+									style="color: red;">*</span></span></br>
+								<div class="col-sm-12">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<div class="input-group-text">
+												<i class="fa fa-calendar grey-text" style="font-size: 1rem;"></i>
+											</div>
+										</div>
+										<input type="text" id="datepicker2" name="openDate"
+											class="form-control" placeholder=" Enter OpenDate "
+											readonly="readonly"
+											value="<%=DataUtility.getDateString(dto.getOpenDate())%>">
+									</div>
+								</div>
+								<font color="red" class="pl-sm-5"> <%=ServletUtility.getErrorMessage("openDate", request)%></font></br>
 								<%
 									if (dto.getId() != null && id > 0) {
 								%>

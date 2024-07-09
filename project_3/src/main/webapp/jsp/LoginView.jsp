@@ -27,15 +27,16 @@
 
 <style type="text/css">
 .log1 {
-	padding-top: 6%;
+	padding-top: 10%;
 }
 
 .input-group-addon {
-	 box-shadow: 9px 8px 7px #001a33; 
-	
+   box-shadow: 9px 8px 7px #001a33;  
+
 }
-.grad{
+.rahul{
 background-image: linear-gradient(to bottom right, Teal, MistyRose, Black );
+/* background-image: linear-gradient(to bottom right, red, green, white); */
 background-repeat: no repeat;
 background-size: 100%;
 padding-bottom: 11px;
@@ -69,11 +70,11 @@ i.css {
 			<div class="row log1">
 				<!-- Grid column -->
 				<div class="col-md-4 "></div>
-				<div class="col-md-4">
-					<div class="card input-group-addon grad	">
+				<div class="col-md-4 ">
+					<div class="card input-group-addon rahul">
 						<div class="card-body">
 
-							<h3 class="text-center ">Login</h3>
+							<h3 class="text-center text-black">Login</h3>
 							<!--Body-->
 							<div>
 
@@ -172,7 +173,7 @@ i.css {
 							</div>
 							<div class="text-center">
 								<a href="<%=ORSView.FORGET_PASSWORD_CTL%>"
-									style="color: white; font-size: 15px;"><b>Forget my
+									style="color: black; font-size: 15px;"><b>Forget my
 										password ?</b></a>
 							</div>
 							<input type="hidden" name="uri" value="<%=uri%>">

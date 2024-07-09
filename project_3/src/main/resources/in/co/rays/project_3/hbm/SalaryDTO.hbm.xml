@@ -1,14 +1,15 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 01-Jul-2024, 12:56:20 PM by Hibernate Tools 3.5.0.Final -->
+<!-- Generated 07-Jun-2024, 3:58:23 PM by Hibernate Tools 3.5.0.Final -->
 <hibernate-mapping package="in.co.rays.project_3.dto">
-    <class name="SalaryDTO" table="SALARYDTO">
+    <class name="SalaryDTO" table="st_salary">
         <id name="id" type="java.lang.Long">
             <column name="ID" />
             <generator class="increment" />
         </id>
-         <property name="employee" type="java.lang.String">
+        
+        <property name="employee" type="java.lang.String">
             <column name="EMPLOYEE" />
         </property>
         <property name="amount" type="java.lang.Long">
