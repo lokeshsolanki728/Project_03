@@ -142,7 +142,7 @@
 					 --%>
 
 <!-- ---------------------------------------------------------------SupplierMODEL--------------------------------------- -->
-			<%--   <li class="nav-item dropdown" style="padding-left: 5px;"><a
+			  <li class="nav-item dropdown" style="padding-left: 5px;"><a
 					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
 					role="button" data-toggle="dropdown" aria-haspopup="true"
 					aria-expanded="false"> <font style="color: Black;">Supplier</font>
@@ -152,7 +152,7 @@
 							class="fas fa-user-tie"></i>Add Supplier
 						</a> <a class="dropdown-item" href="<%=ORSView.SUPPLIER_LIST_CTL%>"><i
 							class="fas fa-university"></i>Supplier List</a>
-					</div></li> --%> 
+					</div></li> 
 					
 <%-- <!-- ---------------------------------------------------------------WishMODEL--------------------------------------- -->
 			  <li class="nav-item dropdown" style="padding-left: 5px;"><a
@@ -198,7 +198,7 @@
 
 
 				<!-- ---------------------------------------------------------------PATIENTMODEL--------------------------------------- -->
-			<%--   <li class="nav-item dropdown" style="padding-left: 5px;"><a
+			  <li class="nav-item dropdown" style="padding-left: 5px;"><a
 					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
 					role="button" data-toggle="dropdown" aria-haspopup="true"
 					aria-expanded="false"> <font style="color: Black;">Patient</font>
@@ -210,9 +210,9 @@
 							class="fas fa-university"></i>Patient List</a>
 					</div></li> 
 
- --%>
 
-				<%-- <!-- ---------------------------------------------------------------PrescriptionMODEL--------------------------------------- -->
+
+				<!-- ---------------------------------------------------------------PrescriptionMODEL--------------------------------------- -->
 			  <li class="nav-item dropdown" style="padding-left: 5px;"><a
 					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
 					role="button" data-toggle="dropdown" aria-haspopup="true"
@@ -224,7 +224,7 @@
 						</a> <a class="dropdown-item" href="<%=ORSView.PRESCRIPTION_LIST_CTL%>"><i
 							class="fas fa-university"></i>Prescription List</a>
 					</div></li> 
- --%>
+
 
 
 

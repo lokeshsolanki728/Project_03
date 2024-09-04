@@ -149,8 +149,8 @@ i.css {
 										<input type="text" class="form-control" 
 											 name="cost"  
 											placeholder="Enter Cost"
-											oninput="handleIntegerInput(this, 'costError', 8)"
-											onblur="validateIntegerInput(this, 'costError', 8)"
+											oninput="handleIntegerInput(this, 'costError', 12)"
+											onblur="validateIntegerInput(this, 'costError',12)"
 											value="<%=DataUtility.getStringData(dto.getCost()).equals("0")? "" : DataUtility.getStringData(dto.getCost())%>">
 
 									</div>

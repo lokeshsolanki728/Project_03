@@ -122,8 +122,8 @@
 
 					<input type="text" name="description"
 						placeholder="Enter Description" class="form-control"
-						oninput="handleLetterInput(this, 'descriptionError', 200)"
-						onblur="validateLetterInput(this, 'descriptionError', 200)"
+						oninput="handleLetterInput(this, 'descriptionError', 100)"
+						onblur="validateLetterInput(this, 'descriptionError', 100)"
 						value="<%=ServletUtility.getParameter("description", request)%>">
 
 
@@ -133,8 +133,8 @@
 				<div class="col-sm-2">
 					<input type="text" name="cost" placeholder="Enter Cost"
 						class="form-control" onkeypress="ValidateKey(event)"
-						maxlength="10" oninput="handleIntegerInput(this, 'costError', 10)"
-						onblur="validateIntegerInput(this, 'costError', 10)"
+						 oninput="handleIntegerInput(this, 'costError', 8)"
+						onblur="validateIntegerInput(this, 'costError', 8)"
 						value="<%=ServletUtility.getParameter("cost", request)%>">
 
 					<font color="red" class="pl-sm-5" id="costError"></font>

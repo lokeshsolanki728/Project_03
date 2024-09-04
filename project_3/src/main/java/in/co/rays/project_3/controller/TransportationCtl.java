@@ -50,6 +50,8 @@ public class TransportationCtl extends BaseCtl {
 			request.setAttribute("cost", PropertyReader.getValue("error.require", "cost"));
 			pass = false;
 
+		}else if(request.getParameter("cost").length()>10) {
+			request.setAttribute("cost", "Cost only contain 10 latter");
 		}
 
 		if (!OP_UPDATE.equalsIgnoreCase(request.getParameter("operation"))) {
